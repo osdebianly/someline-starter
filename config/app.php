@@ -195,6 +195,11 @@ return [
 
         Ignited\LaravelOmnipay\LaravelOmnipayServiceProvider::class, //pay gateway
 
+        /**
+         * sms
+         */
+        Toplan\PhpSms\PhpSmsServiceProvider::class,
+        Toplan\Sms\SmsManagerServiceProvider::class,
 
     ],
 
@@ -249,7 +254,8 @@ return [
         'GeoIP' => Torann\GeoIP\GeoIPFacade::class,
 
         'Omnipay' => Ignited\LaravelOmnipay\Facades\OmnipayFacade::class,
-
+        'PhpSms' => Toplan\PhpSms\Facades\Sms::class,
+        'SmsManager' => Toplan\Sms\Facades\SmsManager::class,
 
     ],
 

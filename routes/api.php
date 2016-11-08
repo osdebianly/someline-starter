@@ -24,6 +24,16 @@ $api->version('v1', [
         $api->post('verify/{type}', 'OrdersController@verify');
 
     });
+
+    //SMS no auth
+    $api->group(['prefix' => 'sms'], function (Router $api) {
+        //$api->get('','SMSController@send') ;
+        $api->post('code', 'SMSController@send');
+        $api->post('verify', 'SMSController@verify');
+        $api->post('password-reset', 'SMSController@resetPassword');
+        $api->post('password-verify', 'SMSController@verifyRestPassword');
+
+    });
     
     // Rate: 100 requests per 5 minutes
     $api->group(['middleware' => ['api.throttle'], 'limit' => 100, 'expires' => 5], function (Router $api) {
@@ -70,15 +80,21 @@ $api->version('v1', [
             $api->delete('/{id}', 'OrdersController@destroy');
 
         });
-        //SMS
-        $api->group(['prefix' => 'sms'],function(Router $api){
-            //$api->get('','SMSController@send') ;
-            $api->post('code','SMSController@send') ;
-            $api->post('verify','SMSController@verify') ;
-            $api->post('password-reset', 'SMSController@resetPassword');
-            $api->post('password-verify', 'SMSController@verifyRestPassword');
 
-        }) ;
+        //game_pays
+        $api->group(['prefix' => 'pays'], function (Router $api) {
+
+            $api->get('', 'PaysController@index');
+            $api->post('', 'PaysController@store');
+
+            $api->get('/{id}', 'PaysController@show');
+
+            $api->put('/{id}', 'PaysController@update');
+
+            $api->delete('/{id}', 'PaysController@destroy');
+
+        });
+
 
     });
 
