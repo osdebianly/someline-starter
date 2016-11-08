@@ -16,6 +16,12 @@ class EventServiceProvider extends ServiceProvider
         'Someline\Events\SomeEvent' => [
             'Someline\Listeners\EventListener',
         ],
+        'Someline\Events\OrderNotPay' => [
+            'Someline\Listeners\OrderNotPayListener'
+        ],
+        'Someline\Events\OrderPaid' => [
+            'Someline\Listeners\OrderPaidListener'
+        ],
     ];
 
     /**

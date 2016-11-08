@@ -40,4 +40,11 @@ class User extends BaseUser
 
     }
 
+
+    //自定义验证字段代替 email
+    public function findForPassport($username)
+    {
+        return User::where('username',$username)->first() ;
+    }
+
 }

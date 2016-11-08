@@ -2,6 +2,7 @@
 
 namespace Someline\Api\Controllers;
 
+use Hash;
 use Dingo\Api\Exception\DeleteResourceFailedException;
 use Dingo\Api\Exception\StoreResourceFailedException;
 use Dingo\Api\Exception\UpdateResourceFailedException;
@@ -10,6 +11,12 @@ use Someline\Http\Requests\UserCreateRequest;
 use Someline\Http\Requests\UserUpdateRequest;
 use Someline\Repositories\Interfaces\UserRepository;
 use Someline\Validators\UserValidator;
+use Illuminate\Http\Request;
+use Someline\Models\Foundation\User ;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Dingo\Api\Exception\ResourceException;
+
+
 
 class UsersController extends BaseController
 {
@@ -72,6 +79,42 @@ class UsersController extends BaseController
 
     }
 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  Request $request
+     *
+     */
+    public function loginMerge(UserCreateRequest $request)
+    {
+        $data = $request->all();
+        $client_secret = $data['client_secret'];
+        $password = $data['password'];
+
+        //Check Input
+        $this->validator->with($data)->passesOrFail('merge');
+        try {
+            $user = User::where('username', $data['username'])->firstOrFail();
+            if (!Hash::check($data['password'], $user->password)) {
+                throw new ResourceException('用户名或密码错误');
+            }
+        } catch (ModelNotFoundException $e) {
+            // Not found User or create
+            unset($data[' ']);
+            $data['password'] = bcrypt($data['password']);
+            $user = $this->repository->create($data);
+        }
+        //Get accessToken
+        $client = new \GuzzleHttp\Client(['base_uri' => config('app.url'), 'exceptions' => false,]);
+        $postData = array_merge($data, ['grant_type' => 'password', 'client_secret' => $client_secret, 'password' => $password]);
+        $response = $client->post('oauth/token', ['form_params' => $postData]);
+        $resutJSON = $response->getBody();
+        //check post 
+
+        return $resutJSON;
+
+    }
+
 
     /**
      * Display the specified resource.
@@ -107,14 +150,19 @@ class UsersController extends BaseController
     public function update(UserUpdateRequest $request, $id)
     {
 
-        $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_UPDATE);
+        //验证用户信息,只有自己才能更新, todo 考虑放在 rule 验证
+//        $authID = auth_user()->getUserId();
+//        if ($authID != $id) {
+//            throw new UpdateResourceFailedException();
+//        }
+        $data = $request->only('name', 'gender', 'birthday', 'phone_number', 'avatar');
+        $data['gender'] = $data['gender'] ? 'M' : 'F';
+        $this->validator->with($data)->passesOrFail(ValidatorInterface::RULE_UPDATE);
 
-        $user = $this->repository->update($request->all(), $id);
+        //处理头像
 
-        // throw exception if update failed
-//        throw new UpdateResourceFailedException('Failed to update.');
+        $user = $this->repository->update($data, $id);
 
-        // Updated, return 204 No Content
         return $this->response->noContent();
 
     }

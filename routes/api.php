@@ -19,6 +19,23 @@ $api->version('v1', [
     'middleware' => ['api']
 ], function (Router $api) {
 
+    $api->group(['prefix' => 'orders'], function (Router $api) {
+
+        $api->post('verify/{type}', 'OrdersController@verify');
+
+    });
+    
+    // Rate: 100 requests per 5 minutes
+    $api->group(['middleware' => ['api.throttle'], 'limit' => 100, 'expires' => 5], function (Router $api) {
+        $api->post('users', 'UsersController@store');
+
+        //登录注册合并
+        $api->post('users/merge', 'UsersController@loginMerge');
+        //获取通知
+        $api->get('publications', 'PublicationsController@index');
+        
+    }) ;
+
     $api->group(['middleware' => ['auth:api']], function (Router $api) {
 
         // Rate: 100 requests per 5 minutes
@@ -26,7 +43,7 @@ $api->version('v1', [
 
             $api->get('users', 'UsersController@index');
 
-            $api->post('users', 'UsersController@store');
+            //$api->post('users', 'UsersController@store');
 
             $api->get('users/me', 'UsersController@me');
 
@@ -36,7 +53,32 @@ $api->version('v1', [
 
             $api->delete('users/{id}', 'UsersController@destroy');
 
+
         });
+
+        //Orders
+        $api->group(['prefix' => 'orders'], function (Router $api) {
+
+            $api->get('', 'OrdersController@index');
+            $api->post('', 'OrdersController@store');
+            //$api->post('verify/{type}', 'OrdersController@verify');
+
+            $api->get('/{id}', 'OrdersController@show');
+
+            $api->put('/{id}', 'OrdersController@update');
+
+            $api->delete('/{id}', 'OrdersController@destroy');
+
+        });
+        //SMS
+        $api->group(['prefix' => 'sms'],function(Router $api){
+            //$api->get('','SMSController@send') ;
+            $api->post('code','SMSController@send') ;
+            $api->post('verify','SMSController@verify') ;
+            $api->post('password-reset', 'SMSController@resetPassword');
+            $api->post('password-verify', 'SMSController@verifyRestPassword');
+
+        }) ;
 
     });
 

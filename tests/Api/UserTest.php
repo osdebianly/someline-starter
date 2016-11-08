@@ -76,4 +76,26 @@ class UserTest extends BaseApiTestCase
         $this->assertResponseNoContent();
     }
 
+    public function testLoginMerge()
+    {
+
+        $this->postApi('users/merge', [
+            'username' => 'lyfing',
+            'password' => '123456',
+            'uuid' => 'e4201f3f686b59a2068abd1f435f1684',
+            'client_id' => '2',
+            'client_secret' => 'FQPr3cy6vaYv1NYmFZHjUDD7XUfUxQk3ckALwOb0',
+            'source' => 'test'
+        ]);
+        $this->printResponseData();
+        $this->assertResponseOk();
+        $this->seeJsonStructure([
+            'access_token',
+            'token_type',
+            'expires_in',
+            'refresh_token'
+
+        ]);
+    }
+
 }

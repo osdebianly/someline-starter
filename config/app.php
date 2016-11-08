@@ -193,6 +193,9 @@ return [
         Someline\Providers\RepositoryServiceProvider::class,
         Someline\Providers\PolymorphicRelationServiceProvider::class,
 
+        Ignited\LaravelOmnipay\LaravelOmnipayServiceProvider::class, //pay gateway
+
+
     ],
 
     /*
@@ -244,6 +247,9 @@ return [
         'LaravelLocalization'   => Mcamara\LaravelLocalization\Facades\LaravelLocalization::class,
         'Countries' => Monarobase\CountryList\CountryListFacade::class,
         'GeoIP' => Torann\GeoIP\GeoIPFacade::class,
+
+        'Omnipay' => Ignited\LaravelOmnipay\Facades\OmnipayFacade::class,
+
 
     ],
 
