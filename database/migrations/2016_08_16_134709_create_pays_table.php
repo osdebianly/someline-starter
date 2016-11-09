@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateOrdersTable extends Migration
+class CreatePaysTable extends Migration
 {
 
     /**
@@ -13,21 +13,23 @@ class CreateOrdersTable extends Migration
      */
     public function up()
     {
-        Schema::create('orders', function (Blueprint $table) {
+        Schema::create('pays', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('user_id')->index();
             $table->unsignedInteger('client_id')->default(0);
-            $table->string('title')->nullable();
-            $table->float('price');
-            $table->string('note')->nullable();
-            $table->string('pay_type', 20)->default('alipay_app');
+            //customer field
             $table->string('state', 10)->default('init');
+            $table->integer('number');
+            $table->string('note')->nullable();
+            $table->string('verify_code'); //生成的验证码
+            $table->smallInteger('try_time')->default(0); //重试次数
 
             $table->unsignedInteger('created_by')->nullable();
+            $table->timestamp('created_at')->nullable();
             $table->ipAddress('created_ip')->nullable();
             $table->unsignedInteger('updated_by')->nullable();
+            $table->timestamp('updated_at')->nullable();
             $table->ipAddress('updated_ip')->nullable();
-            $table->timestamps();
         });
     }
 
@@ -38,7 +40,7 @@ class CreateOrdersTable extends Migration
      */
     public function down()
     {
-        Schema::drop('orders');
+        Schema::drop('pays');
     }
 
 }
