@@ -3,9 +3,10 @@
 namespace Someline\Api\Controllers;
 
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Omnipay;
 use Someline\Events\OrderPaid;
-
+use lyfing\pay\ApplePay;
 use Illuminate\Http\Request;
 
 use Someline\Http\Requests;
@@ -62,21 +63,29 @@ class OrdersController extends BaseController
     public function store(OrderCreateRequest $request)
     {
 
-        $noPay = $request->no_pay;
+        $sanbox = (int)$request->sanbox;
         $data = $request->only(['title', 'price', 'note', 'pay_type']);
         //生成支付宝
         if (empty($data['pay_type'])) {
-            $data['pay_type'] = 'alipay_app';
+            $type = $data['pay_type'] = 'alipay_app';
+        } else {
+            $type = trim($data['pay_type']);
         }
 
         $this->validator->with($data)->passesOrFail(ValidatorInterface::RULE_CREATE);
 
         $order = $this->repository->create($data);
 
-        if($noPay){
+        if ($type == 'no_pay') {
+            $order['data']['notify_url'] = url('api/orders/verify/' . $type);
             return $order ;
         }
-        $type = $data['pay_type'] ;
+
+        if ($type == 'applepay') {
+            $order['data']['verify_url'] = url('api/orders/verify-apple/' . $sanbox);
+            return $order;
+        }
+
         $gateway = Omnipay::gateway($type);
 
         //支付宝支付参数不一样需要分开判断
@@ -113,7 +122,6 @@ class OrdersController extends BaseController
         $result = $response->$method();
 
         $order['data']['pay_data'] = $result;
-        $order['data']['notify_url'] = url('api/orders/verify/' . $type);
 
         //触发未支付订单事件
         //event(new OrderNotPay($user));
@@ -232,29 +240,29 @@ class OrdersController extends BaseController
      */
     public function verify(Request $request, $type = 'alipay_app')
     {
-//
-//        $gateway = Omnipay::gateway($type);
-//
-//        //支付宝支付参数不一样需要分开判断
-//        $request = null;
-//        switch ($type) {
-//            case 'alipay':
-//            case 'alipay_app':
-//                $request = $gateway->completePurchase();
-//                $request->setParams($_POST);//Optional
-//                break;
-//            case 'wechatpay':
-//            case 'wechatpay_app':
-//                $request = $gateway->completePurchase([
-//                    'request_params' => file_get_contents('php://input')
-//                ]);
-//                break;
-//        }
-//
-//        try {
-//
-//            $response = $request->send();
-//            if($response->isPaid()){
+
+        $gateway = Omnipay::gateway($type);
+
+        //支付宝支付参数不一样需要分开判断
+        $request = null;
+        switch ($type) {
+            case 'alipay':
+            case 'alipay_app':
+                $request = $gateway->completePurchase();
+                $request->setParams($_POST);//Optional
+                break;
+            case 'wechatpay':
+            case 'wechatpay_app':
+                $request = $gateway->completePurchase([
+                    'request_params' => file_get_contents('php://input')
+                ]);
+                break;
+        }
+
+        try {
+
+            $response = $request->send();
+            if ($response->isPaid()) {
         //触发未支付订单事件
         //event(new OrderNotPay($user));
         /**
@@ -266,18 +274,38 @@ class OrdersController extends BaseController
         $data = $_POST;
         event(new OrderPaid($data));
 
-//            }else{
-//                /**
-//                 * Payment is not successful
-//                 */
-//                die('fail');
-//            }
-//
-//        } catch (\Exception $e) {
-//
-//           die('fail') ;
-//        }
+            } else {
+                /**
+                 * Payment is not successful
+                 */
+                die('fail');
+            }
+
+        } catch (\Exception $e) {
+
+            die('fail');
+        }
         //The response should be 'success' only
         die('success');
     }
+
+
+    public function verifyApplePay(Request $request, $sanbox = 0)
+    {
+
+        $receipt = $request->receipt;
+        $orderID = $request->order_id;
+
+        $applePay = new ApplePay($receipt, $sanbox);
+        $payData = $applePay->verify();
+        //$price = $payData['receipt']['in_app'][0]['product_id'] ; //商品价格
+
+        $data['out_trade_no'] = $orderID;
+        if ($payData['status'] == 0) {
+            event(new OrderPaid($data));
+        }
+        // $data['receipt']['in_app'][0]['transaction_id']  苹果订单号
+        return ['message' => '支付成功'];
+    }
+
 }

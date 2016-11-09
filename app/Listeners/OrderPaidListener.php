@@ -47,7 +47,7 @@ class OrderPaidListener
                 $order->state = config("order.complete");
                 $user->wealth += $order->price * 100;  //1 元 100 平台积分
                 $user->save();
-                $order->save() ;
+                $order->save();
             });
 
             

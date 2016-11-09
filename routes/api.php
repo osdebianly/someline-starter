@@ -22,6 +22,7 @@ $api->version('v1', [
     $api->group(['prefix' => 'orders'], function (Router $api) {
 
         $api->post('verify/{type}', 'OrdersController@verify');
+        $api->post('verify-apple/{sanbox}', 'OrdersController@verifyApplePay');
 
     });
 
