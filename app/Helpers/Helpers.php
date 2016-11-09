@@ -114,3 +114,19 @@ if (!function_exists('version_to_int')) {
     }
 
 }
+
+if (!function_exists('hashid_encode')) {
+
+    function hashid_encode($id)
+    {
+        return Hashids::encode($id);
+    }
+}
+
+if (!function_exists('hashid_decode')) {
+
+    function hashid_decode($id)
+    {
+        return array_first(Hashids::decode($id));
+    }
+}

@@ -51,3 +51,10 @@ Route::group(['prefix' => 'console'], function () {
     Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 
 });
+
+Route::get('/test/hashids/{id}', function ($id) {
+    return Hashids::encode($id);
+});
+Route::get('/test/decodehashids/{id}', function ($id) {
+    return Hashids::decode($id);
+});

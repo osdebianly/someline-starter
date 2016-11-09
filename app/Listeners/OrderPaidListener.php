@@ -32,14 +32,17 @@ class OrderPaidListener
     public function handle(OrderPaid $event)
     {
         $data = $event->data;
-
-        //Find order by out_trade_no field
-        $orderId = $data['out_trade_no'];
+        /**
+         * 解密订单ID ,这里防止用户遍历,伪造微信通知
+         */
+        $orderId = hashid_decode($data['out_trade_no']);
         $order = Order::find($orderId);
         $user = User::find($order->user_id);
 
         if ($order->state != config("order.complete")) {
-            //事务处理金币和状态更新
+            /**
+             * 事务处理金币和状态更新
+             */
             DB::beginTransaction(function () use ($order,$user){
                 $order->state = config("order.complete");
                 $user->wealth += $order->price * 100;  //1 元 100 平台积分
@@ -50,7 +53,10 @@ class OrderPaidListener
             
         }
 
-        //队列发送通知到服务端
+        /**
+         * 队列发送通知到服务端
+         */
+
 
         dispatch(new OrderPaidNotify($user, $order));
 

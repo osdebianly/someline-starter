@@ -207,6 +207,11 @@ return [
          * Administrator
          */
         Frozennode\Administrator\AdministratorServiceProvider::class,
+        /**
+         * Hashids
+         */
+
+        Vinkla\Hashids\HashidsServiceProvider::class
 
     ],
 
@@ -263,6 +268,7 @@ return [
         'Omnipay' => Ignited\LaravelOmnipay\Facades\OmnipayFacade::class,
         'PhpSms' => Toplan\PhpSms\Facades\Sms::class,
         'SmsManager' => Toplan\Sms\Facades\SmsManager::class,
+        'Hashids' => Vinkla\Hashids\Facades\Hashids::class
 
     ],
 
