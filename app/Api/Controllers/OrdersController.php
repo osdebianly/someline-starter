@@ -75,7 +75,7 @@ class OrdersController extends BaseController
         $this->validator->with($data)->passesOrFail(ValidatorInterface::RULE_CREATE);
 
         $order = $this->repository->create($data);
-
+        $order['data']['id'] = hashid_encode($order['data']['id']);
         if ($type == 'no_pay') {
             $order['data']['notify_url'] = url('api/orders/verify/' . $type);
             return $order ;
@@ -95,7 +95,7 @@ class OrdersController extends BaseController
             case 'alipay_app':
                 $request = $gateway->purchase();
                 $request->setBizContent([
-                    'out_trade_no' => hashid_encode($order['data']['id']),
+                    'out_trade_no' => $order['data']['id'],
                     'total_amount' => $order['data']['price'],
                     'subject' => '游戏充值',
                     'product_code' => 'QUICK_MSECURITY_PAY',
@@ -105,7 +105,7 @@ class OrdersController extends BaseController
             case 'wechatpay_app':
                 $request = $gateway->purchase([
                     'body' => '游戏充值',
-                    'out_trade_no' => hashid_encode($order['data']['id']),
+                    'out_trade_no' => $order['data']['id'],
                     'total_fee' => $order['data']['price'], //=0.01
                     'spbill_create_ip' => smart_get_client_ip(),
                     'fee_type' => 'CNY'
