@@ -113,6 +113,7 @@ class OrdersController extends BaseController
         $result = $response->$method();
 
         $order['data']['pay_data'] = $result;
+        $order['data']['notify_url'] = url('api/orders/verify/' . $type);
 
         //触发未支付订单事件
         //event(new OrderNotPay($user));

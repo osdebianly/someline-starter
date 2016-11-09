@@ -105,3 +105,12 @@ if (!function_exists('verify_sms_code')) {
     }
 
 }
+
+if (!function_exists('version_to_int')) {
+
+    function version_to_int($version)
+    {
+        return (int)str_replace('.', '', $version);
+    }
+
+}

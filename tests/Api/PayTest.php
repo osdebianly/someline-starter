@@ -80,7 +80,6 @@ class PayTest extends BaseApiTestCase
         $pay = Someline\Models\Foundation\Pay::find(1);
         if (!$pay) {
             $pay = factory(Someline\Models\Foundation\Pay::class)->make();
-            dd($pay);
             $pay->id = 1;
             $pay->save();
         }

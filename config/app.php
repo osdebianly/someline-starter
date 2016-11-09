@@ -192,14 +192,21 @@ return [
         Someline\Providers\ApiServiceProvider::class,
         Someline\Providers\RepositoryServiceProvider::class,
         Someline\Providers\PolymorphicRelationServiceProvider::class,
-
-        Ignited\LaravelOmnipay\LaravelOmnipayServiceProvider::class, //pay gateway
+        /**
+         * Pay
+         */
+        Ignited\LaravelOmnipay\LaravelOmnipayServiceProvider::class, 
 
         /**
          * sms
          */
         Toplan\PhpSms\PhpSmsServiceProvider::class,
         Toplan\Sms\SmsManagerServiceProvider::class,
+
+        /**
+         * Administrator
+         */
+        Frozennode\Administrator\AdministratorServiceProvider::class,
 
     ],
 

@@ -9,8 +9,8 @@ use Someline\Repositories\Interfaces\OrderRepository;
 use Someline\Repositories\Eloquent\OrderRepositoryEloquent ;
 use Someline\Repositories\Interfaces\PayRepository;
 use Someline\Repositories\Eloquent\PayRepositoryEloquent;
-
-
+use Someline\Repositories\Interfaces\PublicationRepository;
+use Someline\Repositories\Eloquent\PublicationRepositoryEloquent;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -34,6 +34,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(UserRepository::class, UserRepositoryEloquent::class);
         $this->app->bind(OrderRepository::class, OrderRepositoryEloquent::class);
         $this->app->bind(PayRepository::class, PayRepositoryEloquent::class);
+        $this->app->bind(PublicationRepository::class, PublicationRepositoryEloquent::class);
 
         //:end-bindings:
     }
