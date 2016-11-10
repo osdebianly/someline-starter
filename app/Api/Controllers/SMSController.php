@@ -3,6 +3,7 @@
 namespace Someline\Api\Controllers;
 
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Someline\Http\Requests\UserUpdateRequest;
 use Someline\Models\Foundation\User;
 use Illuminate\Support\Facades\Input;
@@ -57,7 +58,6 @@ class SMSController extends BaseController
             //验证失败后建议清空存储的发送状态，防止用户重复试错
             //SmsManager::forgetState();
             throw new ResourceException('验证码不正确');
-            //return ['status_code'=>Status::HTTP_BAD_REQUEST,'message'=>'验证码不正确'];
         }
         return ['status_code' => Status::HTTP_OK, 'message' => '验证成功'];
 
@@ -70,10 +70,15 @@ class SMSController extends BaseController
      */
     public function resetPassword(Request $request)
     {
-        $currentUser = User::where('phone_number', $request->mobile)->first();
-        if (empty($currentUser->phone_number)) {
+        /**
+         * 首先检查手机号码
+         */
+        try {
+            User::where('phone_number', $request->mobile)->firstOrFail();
+        } catch (ModelNotFoundException $e) {
             throw new ResourceException('该手机号码未绑定');
         }
+
         $res = send_sms_code();
         if (!$res['success']) {
             throw new ResourceException($res['message']);
@@ -90,7 +95,9 @@ class SMSController extends BaseController
      */
     public function verifyRestPassword(Request $request)
     {
-        //验证数据
+        /**
+         * 验证数据
+         */
         $validator = Validator::make($request->all(), [
             'mobile' => 'required',
             'verifyCode' => 'required',
@@ -98,20 +105,18 @@ class SMSController extends BaseController
         ]);
         if ($validator->fails()) {
             throw new ResourceException('参数不全:' . $validator->errors());
-            //return ['status_code' => Status::HTTP_BAD_REQUEST, 'message' => '参数不全', 'errors' => $validator->errors()];
         }
 
-        //$currentUser = auth_user();
         $newPassword = $request->password;
 
-        //$request->merge(['mobile' => $currentUser->phone_number]);
         if (!verify_sms_code()) {
             throw new ResourceException('验证码不正确');
-            //return ['status_code' => Status::HTTP_BAD_REQUEST, 'message' => '验证码不正确'];
         }
 
-        //更新密码
-        $currentUser = User::where('phone_number', $request->mobile)->firstOrfail();
+        /**
+         * 更新密码
+         */
+        $currentUser = User::where('phone_number', $request->mobile)->firstOrFail();
         $currentUser->password = bcrypt($newPassword);
         $currentUser->save();
 
