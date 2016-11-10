@@ -70,22 +70,17 @@ class SMSController extends BaseController
      */
     public function resetPassword(Request $request)
     {
-//        $currentUser = auth_user();
-//        if (empty($currentUser->phone_number)) {
-//            throw new ResourceException('未绑定手机号码');
-//            //return ['status_code' => Status::HTTP_BAD_REQUEST, 'message' => '未绑定手机号码'];
-//        }
-        //丢弃上传的手机号码
-        //$request->merge(['mobile' => $currentUser->phone_number]);
+        $currentUser = User::where('phone_number', $request->mobile)->first();
+        if (empty($currentUser->phone_number)) {
+            throw new ResourceException('该手机号码未绑定');
+        }
         $res = send_sms_code();
         if (!$res['success']) {
             throw new ResourceException($res['message']);
-            //return ['status_code' => Status::HTTP_BAD_REQUEST, 'message' => $res['message'], 'errors' => $res['type']];
         }
 
         return ['status_code' => Status::HTTP_OK, 'message' => $res['message']];
-
-
+        
     }
 
     /**
