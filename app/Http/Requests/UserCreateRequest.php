@@ -24,7 +24,7 @@ class UserCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'uuid' => 'required|string|min:30|max:64',
         ];
     }
 }

@@ -23,7 +23,7 @@ class UserTransformer extends BaseTransformer
             'user_id' => (int)$model->getUserId(),
 
             /* place your other model properties here */
-            'name' => $model->name,
+            'name' => $model->username,
 
             'created_at' => (string)$model->created_at,
             'updated_at' => (string)$model->updated_at

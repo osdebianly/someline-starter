@@ -16,10 +16,12 @@ class User extends BaseUser
      *
      * @var array
      */
-    protected $fillable = [
-        'name', 'email', 'password',
-        'gender', 'birthday', 'country', 'timezone', 'locale', 'username', 'phone_number', 'status',
-    ];
+//    protected $fillable = [
+//        'name', 'email', 'password',
+//        'gender', 'birthday', 'country', 'timezone', 'locale', 'username', 'phone_number', 'status',
+//    ];
+    protected $guarded = ['id', 'created_at', 'updated_at', 'created_by', 'created_ip', 'updated_ip', 'wealth'];
+
 
     /**
      * The attributes that should be hidden for arrays.

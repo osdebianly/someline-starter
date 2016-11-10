@@ -16,7 +16,7 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->increments('user_id');
 //            $table->unsignedInteger('slid')->nullable();
-            $table->string('name', 50);
+            $table->string('name', 50)->nullable();
             $table->char('gender', 1)->nullable();
             $table->date('birthday')->nullable();
             $table->char('country', 2)->default('US');
@@ -24,9 +24,9 @@ class CreateUsersTable extends Migration
             $table->string('locale', 15)->default('en');
             $table->string('username', 50)->nullable();
             $table->string('phone_number')->nullable();
-            $table->string('email');
+            $table->string('email')->nullable();
             $table->string('password', 190);
-            $table->rememberToken();
+            $table->rememberToken()->nullable();
             $table->tinyInteger('status')->default(0);
             $table->text('avatar')->nullable();
             $table->unsignedInteger('created_by')->nullable();

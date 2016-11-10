@@ -130,3 +130,11 @@ if (!function_exists('hashid_decode')) {
         return array_first(Hashids::decode($id));
     }
 }
+
+if (!function_exists('username_generate')) {
+
+    function username_generate()
+    {
+        return 'u' . hashid_encode(time() . random_int(100, 999));
+    }
+}

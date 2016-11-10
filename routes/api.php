@@ -33,6 +33,7 @@ $api->version('v1', [
         $api->post('verify', 'SMSController@verify');
         $api->post('password-reset', 'SMSController@resetPassword');
         $api->post('password-verify', 'SMSController@verifyRestPassword');
+        $api->post('mobile-login-verify', 'SMSController@verifyMobileLogin');
 
     });
     

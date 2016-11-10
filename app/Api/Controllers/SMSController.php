@@ -85,7 +85,7 @@ class SMSController extends BaseController
         }
 
         return ['status_code' => Status::HTTP_OK, 'message' => $res['message']];
-        
+
     }
 
     /**
@@ -121,6 +121,62 @@ class SMSController extends BaseController
         $currentUser->save();
 
         return ['status_code' => Status::HTTP_OK, 'message' => '密码修改成功'];
+    }
+
+    /**
+     *  Verify reset password code
+     * @param Request $request
+     * @return array
+     */
+    public function verifyMobileLogin(Request $request)
+    {
+        $data = $request->only('mobile', 'verifyCode', 'uuid', 'client_id', 'client_secret', 'source');
+//        $client_id = $data['client_id'];
+//        $client_secret = $data['client_secret'];
+        /**
+         * 验证数据
+         */
+        $validator = Validator::make($data, [
+            'mobile' => 'required|zh_mobile',
+            'verifyCode' => 'required|min:4|max:5'
+        ]);
+        if ($validator->fails()) {
+            throw new ResourceException('参数无效:' . $validator->errors());
+        }
+
+        if (!verify_sms_code()) {
+            throw new ResourceException('验证码不正确');
+        }
+        /**
+         *
+         */
+        try {
+            $user = User::where('phone_number', $data['mobile'])->firstOrFail();
+            //重置用户密码
+            $data['username'] = $user->username;
+            $data['password'] = substr($user->username, -6);
+            $user->password = bcrypt($data['password']);
+            $user->save();
+
+        } catch (ModelNotFoundException $e) {
+            /*// Not found User or create
+            if (empty($client_id) || empty($client_secret)) {
+                throw new ResourceException('参数不足无法创建用户');
+            }
+            $data['username'] = username_generate();
+            $data['password'] = bcrypt($data['username']);
+            $data['phone_number'] = $data['mobile'];
+            unset($data['client_secret']);
+            unset($data['mobile']);
+            $user = $this->repository->create($data);
+            //todo 自动发送用户短信,通知重置密码功能*/
+        }
+        //Get accessToken
+        $client = new \GuzzleHttp\Client(['base_uri' => config('app.url'), 'exceptions' => false,]);
+        $postData = array_merge($data, ['grant_type' => 'password']);
+        $response = $client->post('oauth/token', ['form_params' => $postData]);
+        $resutJSON = $response->getBody();
+        return json_decode($resutJSON, true);
     }
 
 

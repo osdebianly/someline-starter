@@ -12,10 +12,9 @@ use Someline\Http\Requests\UserUpdateRequest;
 use Someline\Repositories\Interfaces\UserRepository;
 use Someline\Validators\UserValidator;
 use Illuminate\Http\Request;
-use Someline\Models\Foundation\User ;
+use Someline\Models\Foundation\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Dingo\Api\Exception\ResourceException;
-
 
 
 class UsersController extends BaseController
@@ -88,6 +87,21 @@ class UsersController extends BaseController
     public function loginMerge(UserCreateRequest $request)
     {
         $data = $request->all();
+
+        /**
+         * 检查一键登录(用户名密码为空)
+         */
+        if (empty($data['username'])) {
+            /**
+             * 检查该 uuid 是否注册过
+             */
+            try {
+                $user = User::where('uuid', $data['uuid'])->firstOrFail();
+                $data['password'] = $data['username'] = $user->username;
+            } catch (ModelNotFoundException $e) {
+                $data['password'] = $data['username'] = username_generate();
+            }
+        }
         $client_secret = $data['client_secret'];
         $password = $data['password'];
 
@@ -100,7 +114,7 @@ class UsersController extends BaseController
             }
         } catch (ModelNotFoundException $e) {
             // Not found User or create
-            unset($data[' ']);
+            unset($data['client_secret']);
             $data['password'] = bcrypt($data['password']);
             $user = $this->repository->create($data);
         }
@@ -109,10 +123,7 @@ class UsersController extends BaseController
         $postData = array_merge($data, ['grant_type' => 'password', 'client_secret' => $client_secret, 'password' => $password]);
         $response = $client->post('oauth/token', ['form_params' => $postData]);
         $resutJSON = $response->getBody();
-        //check post 
-
-        return $resutJSON;
-
+        return json_decode($resutJSON, true);
     }
 
 
