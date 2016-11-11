@@ -28,6 +28,7 @@ class CreateUsersTable extends Migration
             $table->string('password', 190);
             $table->rememberToken()->nullable();
             $table->tinyInteger('status')->default(0);
+            $table->tinyInteger('guest')->default(0);
             $table->text('avatar')->nullable();
             $table->unsignedInteger('created_by')->nullable();
             $table->timestamp('created_at')->nullable();

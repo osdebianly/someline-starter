@@ -94,6 +94,9 @@ class UsersController extends BaseController
 
         $client_secret = $data['client_secret'];
         $password = $data['password'];
+
+        unset($data['client_secret']);
+
         /**
          * 检查一键登录(用户名密码为空)
          */
@@ -102,10 +105,11 @@ class UsersController extends BaseController
              * 检查该 uuid 是否注册过
              */
             try {
-                $user = User::where('uuid', $data['uuid'])->firstOrFail();
+                $user = User::where('uuid', $data['uuid'])->where('guest', 1)->firstOrFail();
                 $data['password'] = $data['username'] = $user->username;
             } catch (ModelNotFoundException $e) {
                 $data['password'] = $data['username'] = username_generate();
+                $data['guest'] = 1;
             }
         }
         /**
@@ -130,8 +134,15 @@ class UsersController extends BaseController
                     throw new ResourceException('用户名或密码错误');
                 }
             } catch (ModelNotFoundException $e) {
-                // Not found User or create
-                unset($data['client_secret']);
+                /**
+                 * 小号检查
+                 */
+                $maxUserNumber = config('game-server.maxUserNumber');
+                $user = User::where('uuid', $data['uuid'])->get(['username']);
+                if ($user->count() > $maxUserNumber) {
+                    throw new ResourceException('该设备达到注册上限');
+                }
+
                 $data['password'] = bcrypt($data['password']);
                 $user = $this->repository->create($data);
             }
