@@ -87,7 +87,13 @@ class UsersController extends BaseController
     public function loginMerge(UserCreateRequest $request)
     {
         $data = $request->all();
+        /**
+         * 校验
+         */
+        $this->validator->with($data)->passesOrFail('merge');
 
+        $client_secret = $data['client_secret'];
+        $password = $data['password'];
         /**
          * 检查一键登录(用户名密码为空)
          */
@@ -102,21 +108,33 @@ class UsersController extends BaseController
                 $data['password'] = $data['username'] = username_generate();
             }
         }
-        $client_secret = $data['client_secret'];
-        $password = $data['password'];
+        /**
+         * 检查用户名是否是手机号码
+         */
+        $validator = \Validator::make($data, [
+            'username' => 'required|zh_mobile'
+        ]);
+        if (!$validator->fails()) {
 
-        //Check Input
-        $this->validator->with($data)->passesOrFail('merge');
-        try {
-            $user = User::where('username', $data['username'])->firstOrFail();
-            if (!Hash::check($data['password'], $user->password)) {
-                throw new ResourceException('用户名或密码错误');
+            try {
+                $user = User::where('phone_number', $data['username'])->firstOrFail();
+                $data['username'] = $user->username;
+            } catch (ModelNotFoundException $e) {
+                throw new ResourceException('该手机号码未绑定过');
             }
-        } catch (ModelNotFoundException $e) {
-            // Not found User or create
-            unset($data['client_secret']);
-            $data['password'] = bcrypt($data['password']);
-            $user = $this->repository->create($data);
+        } else {
+
+            try {
+                $user = User::where('username', $data['username'])->firstOrFail();
+                if (!Hash::check($data['password'], $user->password)) {
+                    throw new ResourceException('用户名或密码错误');
+                }
+            } catch (ModelNotFoundException $e) {
+                // Not found User or create
+                unset($data['client_secret']);
+                $data['password'] = bcrypt($data['password']);
+                $user = $this->repository->create($data);
+            }
         }
         //Get accessToken
         $client = new \GuzzleHttp\Client(['base_uri' => config('app.url'), 'exceptions' => false,]);

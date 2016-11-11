@@ -16,11 +16,12 @@ class User extends BaseUser
      *
      * @var array
      */
-//    protected $fillable = [
-//        'name', 'email', 'password',
-//        'gender', 'birthday', 'country', 'timezone', 'locale', 'username', 'phone_number', 'status',
-//    ];
-    protected $guarded = ['id', 'created_at', 'updated_at', 'created_by', 'created_ip', 'updated_ip', 'wealth'];
+    protected $fillable = [
+        'name', 'email', 'password',
+        'gender', 'birthday', 'country', 'timezone', 'locale', 'username', 'phone_number', 'status', 'avatar',
+        'client_id', 'wechat_id', 'qq_id', 'uuid', 'source', 'device'
+    ];
+    //protected $guarded = ['id', 'created_at', 'updated_at', 'created_by', 'created_ip', 'updated_ip', 'wealth'];
 
 
     /**
@@ -46,6 +47,13 @@ class User extends BaseUser
     //自定义验证字段代替 email
     public function findForPassport($username)
     {
+        $data['phone_number'] = $username;
+        $validator = \Validator::make($data, [
+            'phone_number' => 'required|zh_mobile'
+        ]);
+        if (!$validator->fails()) {
+            return User::where('phone_number', $username)->first();
+        }
         return User::where('username',$username)->first() ;
     }
 
