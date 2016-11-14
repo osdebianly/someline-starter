@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Someline\Models\Foundation\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Dingo\Api\Exception\ResourceException;
+use Lukasoppermann\Httpstatus\Httpstatuscodes as Status;
 
 
 class UsersController extends BaseController
@@ -142,7 +143,7 @@ class UsersController extends BaseController
                 if ($user->count() > $maxUserNumber) {
                     throw new ResourceException('该设备达到注册上限');
                 }
-
+                $password = $data['password'];
                 $data['password'] = bcrypt($data['password']);
                 $user = $this->repository->create($data);
             }
@@ -227,4 +228,25 @@ class UsersController extends BaseController
             throw new DeleteResourceFailedException();
         }
     }
+
+    /**
+     * 已登录用户修改密码
+     * @param Request $request
+     * @return array
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
+     */
+    public function restPassword(Request $request)
+    {
+        $this->validator->with($request->all())->passesOrFail('password');
+        $user = current_auth_user();
+        if (!Hash::check($request->old_password, $user->password)) {
+            throw new ResourceException('旧密码错误');
+        }
+        $user->password = bcrypt($request->password);
+        $user->save();
+
+        return ['status_code' => Status::HTTP_OK, 'message' => '修改成功'];
+    }
+
+
 }

@@ -98,4 +98,21 @@ class UserTest extends BaseApiTestCase
         ]);
     }
 
+    /**
+     *  reset password by mobile
+     */
+    public function testResetPassword()
+    {
+        $this->withOAuthTokenTypePassword();
+
+        $this->postApi('users/password-rest', ['old_password' => '123456', 'password' => '123456']);
+
+        $this->printResponseData();
+        $this->seeJsonStructure([
+            "status_code",
+            "message"
+        ]);
+
+    }
+
 }

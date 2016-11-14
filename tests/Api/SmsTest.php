@@ -75,5 +75,24 @@ class SmsTest extends BaseApiTestCase
 
     }
 
+    /**
+     *  unbind user mobile
+     */
+    public function testUnbindMobile()
+    {
+        $this->withOAuthTokenTypePassword();
+
+        $this->postApi('sms/code', []);
+
+        $this->postApi('sms/unbind', ['mobile' => 17091312110, 'verifyCode' => '000000']);
+
+        $this->printResponseData();
+        $this->seeJsonStructure([
+            "status_code",
+            "message"
+        ]);
+
+    }
+
 
 }

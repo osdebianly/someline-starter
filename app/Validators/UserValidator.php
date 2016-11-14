@@ -32,6 +32,14 @@ class UserValidator extends LaravelValidator {
             'client_id' => 'required',
             'client_secret' => 'required'
         ],
+        /**
+         * 更新密码验证
+         */
+        'password' => [
+            'old_password' => 'required|string|min:3|max:100',
+            'password' => 'required|string|min:3|max:100',
+        ],
+        
     ];
 
 

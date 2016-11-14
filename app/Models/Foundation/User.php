@@ -19,7 +19,7 @@ class User extends BaseUser
     protected $fillable = [
         'name', 'email', 'password',
         'gender', 'birthday', 'country', 'timezone', 'locale', 'username', 'phone_number', 'status', 'avatar',
-        'client_id', 'wechat_id', 'qq_id', 'uuid', 'source', 'device'
+        'client_id', 'wechat_id', 'qq_id', 'uuid', 'source', 'device', 'guest'
     ];
     //protected $guarded = ['id', 'created_at', 'updated_at', 'created_by', 'created_ip', 'updated_ip', 'wealth'];
 

@@ -66,6 +66,14 @@ if (!function_exists('send_sms_code')) {
      */
     function send_sms_code()
     {
+        $request = request();
+        /**
+         * 如果没有,则取当前 api 认证用户手机号码
+         */
+        if (empty($request->mobile)) {
+            $user = \Auth::guard('api')->user();
+            $request->merge(['mobile' => $user ? $user->phone_number : '']);
+        }
 
         //启用队列
         PhpSms::queue(true);
