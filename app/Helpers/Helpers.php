@@ -102,6 +102,14 @@ if (!function_exists('verify_sms_code')) {
     {
         //验证数据
         $request = request();
+        /**
+         * 如果没有,则取当前 api 认证用户手机号码
+         */
+        if (empty($request->mobile)) {
+            $user = \Auth::guard('api')->user();
+            $request->merge(['mobile' => $user ? $user->phone_number : '']);
+        }
+
         $validator = Validator::make($request->all(), [
             'mobile' => 'required|confirm_mobile_not_change|confirm_rule:mobile_required',
             'verifyCode' => 'required|verify_code',
