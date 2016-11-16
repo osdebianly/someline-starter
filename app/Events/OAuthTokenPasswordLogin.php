@@ -17,8 +17,7 @@ class OAuthTokenPasswordLogin
 
     /**
      * Create a new event instance.
-     *
-     * @return void
+     * @param array $tokenInfo
      */
     public function __construct($tokenInfo)
     {

@@ -2,14 +2,16 @@
 
 namespace Someline\Events;
 
-use Someline\Events\Event;
-use Someline\Models\Foundation\User;
+use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Broadcasting\PrivateChannel;
+use Illuminate\Broadcasting\PresenceChannel;
+use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class OrderPaid extends Event
+class OrderPaid
 {
-    use SerializesModels;
+    use InteractsWithSockets, SerializesModels;
 
     public $data;
 

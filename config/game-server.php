@@ -10,7 +10,7 @@ return [
     |
     */
 
-    'payNotifyServerList' => env('PAY_NOTIFY_SERVER_LIST', ['192.168.1.1/neworder']),
+    'payNotifyServerList' => env('PAY_NOTIFY_SERVER_LIST', ['http://192.168.2.148:2002']),
 
     /*
     |--------------------------------------------------------------------------

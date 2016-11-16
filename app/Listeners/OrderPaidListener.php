@@ -10,6 +10,8 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 //use Notifynder;
 use Someline\Models\Order ;
 use Someline\Models\Foundation\User;
+use Someline\Jobs\PostDateToGameServer;
+
 
 class OrderPaidListener
 {
@@ -53,12 +55,25 @@ class OrderPaidListener
             
         }
 
+        $postData['user_id'] = $order->user_id;
+        $postData['event'] = 'buy';
+        $postData['timestamp'] = time();
+        $postData['sign'] = md5($postData['event'] . $postData['timestamp'] . $postData['user_id']);
+        $postData['data'] = [
+            'note' => $order->note,
+            'order_id' => $order->id,
+            'order_price' => $order->price
+        ];
+
         /**
          * 队列发送通知到服务端
          */
 
 
-        dispatch(new OrderPaidNotify($user, $order));
+        dispatch(new PostDateToGameServer($postData));
+
+
+        //dispatch(new OrderPaidNotify($user, $order));
 
 
         //发送通知
