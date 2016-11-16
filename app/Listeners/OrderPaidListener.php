@@ -47,14 +47,20 @@ class OrderPaidListener
              */
             DB::beginTransaction(function () use ($order,$user){
                 $order->state = config("order.complete");
-                $user->wealth += $order->price * 100;  //1 元 100 平台积分
-                $user->save();
+                /**
+                 * 仅充值
+                 */
+                if (empty($order->notify_url) && $order->once_pay == 0) {
+                    $user->wealth += $order->price * 100;  //1 元 100 平台积分
+                    $user->save();
+                }
                 $order->save();
             });
-
-            
         }
 
+        /**
+         * 一次性消费
+         */
         $postData['user_id'] = $order->user_id;
         $postData['event'] = 'buy';
         $postData['timestamp'] = time();
@@ -68,9 +74,9 @@ class OrderPaidListener
         /**
          * 队列发送通知到服务端
          */
+        $notifyUrls = empty($order->notify_url) ? config('game-server.payNotifyServerList') : $order->notify_url;
 
-
-        dispatch(new PostDateToGameServer($postData));
+        dispatch(new PostDateToGameServer($postData, $notifyUrls));
 
 
         //dispatch(new OrderPaidNotify($user, $order));

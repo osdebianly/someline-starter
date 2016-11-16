@@ -14,15 +14,18 @@ class PostDateToGameServer implements ShouldQueue
     use InteractsWithQueue, Queueable, SerializesModels;
 
     public $data;
+    public $notifyUrls;
 
     /**
      * Create a new job instance.
      *
-     * @return void
+     * @param mixed $data
+     * @param mixed $notifyUrls
      */
-    public function __construct($data)
+    public function __construct($data, $notifyUrls)
     {
         $this->data = $data;
+        $this->notifyUrls = $notifyUrls;
     }
 
     /**
@@ -32,9 +35,8 @@ class PostDateToGameServer implements ShouldQueue
      */
     public function handle(Client $client)
     {
-        $serverList = config('game-server.payNotifyServerList');
-
-        foreach ($serverList as $notifiyUrl) {
+        $notifyUrls = is_array($this->notifyUrls) ? $this->notifyUrls : [$this->notifyUrls];
+        foreach ($notifyUrls as $notifiyUrl) {
             \Log::info(date('y-m-d H:i:s') . "开始通知服务器:" . $notifiyUrl . '内容' . print_r($this->data, true) . "\n");
             $client->request('POST', $notifiyUrl, ['json' => $this->data]);
         }
