@@ -22,6 +22,8 @@ class CreateOrdersTable extends Migration
             $table->string('note')->nullable();
             $table->string('pay_type', 20)->default('alipay_app');
             $table->string('state', 10)->default('init');
+            $table->tinyInteger('once_pay')->default(1);
+            $table->string('notify_url')->nullable();
 
             $table->unsignedInteger('created_by')->nullable();
             $table->ipAddress('created_ip')->nullable();
