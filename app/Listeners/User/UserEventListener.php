@@ -10,6 +10,7 @@ namespace Someline\Listeners\User;
 use Someline\Events\User\UserLoggedInEvent;
 use Someline\Events\User\UserRegisteredEvent;
 use Someline\Models\BaseModel;
+use Illuminate\Auth\Events\Login;
 
 class UserEventListener
 {
@@ -23,8 +24,10 @@ class UserEventListener
      * Handle user login events.
      * @param UserLoggedInEvent $event
      */
-    public function onUserLogin(UserLoggedInEvent $event)
+    public function onUserLogin(Login $event)
     {
+        \Log::info('login-------------');
+        
     }
 
     /**
@@ -33,6 +36,7 @@ class UserEventListener
      */
     public function onUserRegistered(UserRegisteredEvent $event)
     {
+        \Log::info(' user api register  event------');
     }
 
     /**
@@ -40,6 +44,14 @@ class UserEventListener
      */
     public function onUserLogout($event)
     {
+        \Log::info(' user logout event------');
+     
+    }
+
+    public function test()
+    {
+        \Log::info('test-------------');
+
     }
 
     /**
@@ -50,18 +62,28 @@ class UserEventListener
     public function subscribe($events)
     {
         $events->listen(
-            UserLoggedInEvent::class,
+            'Illuminate\Auth\Events\Login',
             'Someline\Listeners\User\UserEventListener@onUserLogin'
         );
 
         $events->listen(
-            UserRegisteredEvent::class,
+            'Illuminate\Auth\Events\Logout',
+            'Someline\Listeners\User\UserEventListener@onUserLogout'
+        );
+        $events->listen(
+            'auth.attempt',
             'Someline\Listeners\User\UserEventListener@onUserRegistered'
         );
 
+//
 //        $events->listen(
-//            'Someline\Events\UserLoggedOut',
-//            'Someline\Listeners\UserEventListener@onUserLogout'
+//            UserRegisteredEvent::class,
+//            'Someline\Listeners\User\UserEventListener@onUserRegistered'
+//        );
+
+//        $events->listen(
+//            'Illuminate\Auth\Events\Login',
+//            'Someline\Listeners\User\UserEventListener@onUserLogin'
 //        );
     }
 

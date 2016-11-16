@@ -16,6 +16,7 @@ use Someline\Models\Foundation\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Dingo\Api\Exception\ResourceException;
 use Lukasoppermann\Httpstatus\Httpstatuscodes as Status;
+use Someline\Events\OAuthTokenPasswordLogin;
 
 
 class UsersController extends BaseController
@@ -145,7 +146,7 @@ class UsersController extends BaseController
                 }
                 $password = $data['password'];
                 $data['password'] = bcrypt($data['password']);
-                $user = $this->repository->create($data);
+                $user = User::create($data);
             }
         }
         //Get accessToken
@@ -153,7 +154,19 @@ class UsersController extends BaseController
         $postData = array_merge($data, ['grant_type' => 'password', 'client_secret' => $client_secret, 'password' => $password]);
         $response = $client->post('oauth/token', ['form_params' => $postData]);
         $resutJSON = $response->getBody();
-        return json_decode($resutJSON, true);
+        $tokenInfo = json_decode($resutJSON, true);
+
+        /**
+         *  推送到后台
+         */
+        $eventInfo = [
+            'user_id' => $user->getUserId(),
+            'data' => ['access_token' => $tokenInfo['access_token']]
+        ];
+        event(new OAuthTokenPasswordLogin($eventInfo));
+
+        return $tokenInfo;
+
     }
 
 

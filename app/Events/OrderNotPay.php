@@ -2,8 +2,8 @@
 
 namespace Someline\Events;
 
-use App\Events\Event;
-use App\Models\Foundation\User;
+use Someline\Events\Event;
+use Someline\Models\Foundation\User;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 

@@ -44,6 +44,6 @@ return [
    |
    */
 
-    'maxUserNumber' => 3,
+    'maxUserNumber' => 30,
 
 ];

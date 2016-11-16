@@ -24,7 +24,7 @@ class UserValidator extends LaravelValidator {
          */
         'merge' => [
             //'username' => 'required|alpha_dash|min:3|max:32|regex:/[A-Za-z]+/',
-            'username' => 'alpha_dash|min:3|max:32|unique:users',
+            'username' => 'alpha_dash|min:3|max:32',
             'email' => 'email|max:255',
             'password' => 'string|min:3|max:100',
             'uuid' => 'required|string|min:30|max:64',
