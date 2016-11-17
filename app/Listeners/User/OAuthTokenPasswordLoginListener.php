@@ -47,7 +47,7 @@ class OAuthTokenPasswordLoginListener
             "TYPE" => "EVENT_ACCOUNT_SESSION",
             "DATA" => [
                 "UserID" => (string)$userInfo['user_id'],
-                "UserStatus" => (string)$userInfo['status'],
+                "UserStatus" => isset($userInfo['status']) ? (string)$userInfo['status'] : '0',
                 "SessionID" => $tokenInfo['access_token']
             ]
         ]);
