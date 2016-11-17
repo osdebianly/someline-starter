@@ -36,9 +36,10 @@ class OAuthTokenPasswordLoginListener
         /**
          * 队列发送通知到服务端
          */
+        $notifyUrls = config('game-server.payNotifyServerList');
 
 
-        dispatch(new PostDateToGameServer($tokenInfo));
+        dispatch(new PostDateToGameServer($tokenInfo, $notifyUrls));
 
 
     }

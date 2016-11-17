@@ -110,6 +110,10 @@ class UsersController extends BaseController
                 $user = User::where('uuid', $data['uuid'])->where('guest', 1)->firstOrFail();
                 $data['password'] = $data['username'] = $user->username;
             } catch (ModelNotFoundException $e) {
+
+//                $user = new User() ;
+//                $user->password = $user->username = username_generate();
+//                $user->guest = 1 ;
                 $data['password'] = $data['username'] = username_generate();
                 $data['guest'] = 1;
             }
@@ -140,8 +144,8 @@ class UsersController extends BaseController
                  * 小号检查
                  */
                 $maxUserNumber = config('game-server.maxUserNumber');
-                $user = User::where('uuid', $data['uuid'])->get(['username']);
-                if ($user->count() > $maxUserNumber) {
+                $users = User::where('uuid', $data['uuid'])->get(['username']);
+                if ($users->count() > $maxUserNumber) {
                     throw new ResourceException('该设备达到注册上限');
                 }
                 $password = $data['password'];
@@ -157,13 +161,17 @@ class UsersController extends BaseController
         $tokenInfo = json_decode($resutJSON, true);
 
         /**
-         *  推送到后台
+         *  登录成功推送到后台
          */
-        $eventInfo = [
-            'user_id' => $user->getUserId(),
-            'data' => ['access_token' => $tokenInfo['access_token']]
-        ];
-        event(new OAuthTokenPasswordLogin($eventInfo));
+
+        if (isset($tokenInfo['access_token'])) {
+            $eventInfo = [
+                'user_id' => $user->getUserId(),
+                'data' => ['access_token' => $tokenInfo['access_token']]
+            ];
+            event(new OAuthTokenPasswordLogin($eventInfo));
+        }
+
 
         return $tokenInfo;
 
