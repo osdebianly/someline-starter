@@ -37,7 +37,7 @@ class PostDateToGameServer implements ShouldQueue
     {
         $notifyUrls = is_array($this->notifyUrls) ? $this->notifyUrls : [$this->notifyUrls];
         foreach ($notifyUrls as $notifiyUrl) {
-            \Log::info(date('y-m-d H:i:s') . "开始通知服务器:" . $notifiyUrl . '内容' . print_r($this->data, true) . "\n");
+            \Log::info(date('y-m-d H:i:s') . "开始通知服务器:" . $notifiyUrl . '内容' . "\n" . json_encode($this->data) . "\n");
             //$client->request('POST', $notifiyUrl, ['json' => $this->data]);
         }
     }

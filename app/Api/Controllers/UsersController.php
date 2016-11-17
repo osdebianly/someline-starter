@@ -88,16 +88,12 @@ class UsersController extends BaseController
      */
     public function loginMerge(UserCreateRequest $request)
     {
-        $data = $request->all();
+
         /**
          * 校验
          */
-        $this->validator->with($data)->passesOrFail('merge');
-
-        $client_secret = $data['client_secret'];
-        $password = $data['password'];
-
-        unset($data['client_secret']);
+        $this->validator->with($request->all())->passesOrFail('merge');
+        $data = $request->all();
 
         /**
          * 检查一键登录(用户名密码为空)
@@ -110,10 +106,6 @@ class UsersController extends BaseController
                 $user = User::where('uuid', $data['uuid'])->where('guest', 1)->firstOrFail();
                 $data['password'] = $data['username'] = $user->username;
             } catch (ModelNotFoundException $e) {
-
-//                $user = new User() ;
-//                $user->password = $user->username = username_generate();
-//                $user->guest = 1 ;
                 $data['password'] = $data['username'] = username_generate();
                 $data['guest'] = 1;
             }
@@ -148,14 +140,14 @@ class UsersController extends BaseController
                 if ($users->count() > $maxUserNumber) {
                     throw new ResourceException('该设备达到注册上限');
                 }
-                $password = $data['password'];
-                $data['password'] = bcrypt($data['password']);
                 $user = User::create($data);
             }
         }
-        //Get accessToken
+        /**
+         * 获取 Token
+         */
         $client = new \GuzzleHttp\Client(['base_uri' => config('app.url'), 'exceptions' => false,]);
-        $postData = array_merge($data, ['grant_type' => 'password', 'client_secret' => $client_secret, 'password' => $password]);
+        $postData = array_merge($data, ['grant_type' => 'password']);
         $response = $client->post('oauth/token', ['form_params' => $postData]);
         $resutJSON = $response->getBody();
         $tokenInfo = json_decode($resutJSON, true);
@@ -166,8 +158,9 @@ class UsersController extends BaseController
 
         if (isset($tokenInfo['access_token'])) {
             $eventInfo = [
-                'user_id' => $user->getUserId(),
-                'data' => ['access_token' => $tokenInfo['access_token']]
+                'post_info' => $data,
+                'user_info' => $user->toArray(),
+                'token_info' => $tokenInfo
             ];
             event(new OAuthTokenPasswordLogin($eventInfo));
         }

@@ -43,6 +43,11 @@ class User extends BaseUser
 
     }
 
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = bcrypt($value);
+    }
+
 
     //自定义验证字段代替 email
     public function findForPassport($username)

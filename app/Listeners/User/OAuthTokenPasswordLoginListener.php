@@ -27,20 +27,40 @@ class OAuthTokenPasswordLoginListener
      */
     public function handle(OAuthTokenPasswordLogin $event)
     {
-        $tokenInfo = $event->tokenInfo;
-        $tokenInfo['event'] = 'login';
-        $tokenInfo['timestamp'] = time();
-        $tokenInfo['sign'] = md5($tokenInfo['event'] . $tokenInfo['timestamp'] . $tokenInfo['user_id']);
+        /**
+        * $tokenInfo = $event->tokenInfo;
+        * $tokenInfo['event'] = 'login';
+        * $tokenInfo['timestamp'] = time();
+        * $tokenInfo['sign'] = md5($tokenInfo['event'] . $tokenInfo['timestamp'] . $tokenInfo['user_id']);
+         */
 
+        /**
+         * 使用旧的数据结构
+         */
+        //$tokenInfo = $event->tokenInfo;
+        $postInfo = $event->tokenInfo['post_info'];
+        $userInfo = $event->tokenInfo['user_info'];
+        $tokenInfo = $event->tokenInfo['token_info'];
 
+        $data['appid'] = isset($postInfo['appid']) ? $postInfo['appid'] : '1';
+        $data['event'] = json_encode([
+            "TYPE" => "EVENT_ACCOUNT_SESSION",
+            "DATA" => [
+                "UserID" => $userInfo['user_id'],
+                "UserStatus" => $userInfo['status'],
+                "SessionID" => $tokenInfo['access_token']
+            ]
+        ]);
+        $data['serverid'] = isset($postInfo['server_id']) ? $postInfo['server_id'] : 1;
+        $data['ts'] = time();
+        $data['sign'] = md5($data['appid'] . $data['ts']) ;
+        
         /**
          * 队列发送通知到服务端
          */
         $notifyUrls = config('game-server.payNotifyServerList');
 
-
-        dispatch(new PostDateToGameServer($tokenInfo, $notifyUrls));
-
-
+        dispatch(new PostDateToGameServer($data, $notifyUrls));
+        
     }
 }
