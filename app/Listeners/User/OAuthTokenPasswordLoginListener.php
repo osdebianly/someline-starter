@@ -42,16 +42,16 @@ class OAuthTokenPasswordLoginListener
         $userInfo = $event->tokenInfo['user_info'];
         $tokenInfo = $event->tokenInfo['token_info'];
 
-        $data['appid'] = isset($postInfo['appid']) ? $postInfo['appid'] : '1';
+        $data['appid'] = isset($postInfo['client_id']) ? (int)$postInfo['client_id'] : 1;
         $data['event'] = json_encode([
             "TYPE" => "EVENT_ACCOUNT_SESSION",
             "DATA" => [
-                "UserID" => $userInfo['user_id'],
-                "UserStatus" => $userInfo['status'],
+                "UserID" => (string)$userInfo['user_id'],
+                "UserStatus" => (string)$userInfo['status'],
                 "SessionID" => $tokenInfo['access_token']
             ]
         ]);
-        $data['serverid'] = isset($postInfo['server_id']) ? $postInfo['server_id'] : 1;
+        $data['serverid'] = isset($postInfo['server_id']) ? (int)$postInfo['server_id'] : 1;
         $data['ts'] = time();
         $data['sign'] = md5($data['appid'] . $data['ts']) ;
         
