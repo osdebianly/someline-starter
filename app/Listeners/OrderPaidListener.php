@@ -61,6 +61,7 @@ class OrderPaidListener
         /**
          * 一次性消费
          */
+        /**
         $postData['user_id'] = $order->user_id;
         $postData['event'] = 'buy';
         $postData['timestamp'] = time();
@@ -69,7 +70,26 @@ class OrderPaidListener
             'note' => $order->note,
             'order_id' => $order->id,
             'order_price' => $order->price
+        ];*/
+        $isFirstPay = Order::where('user_id', $order->user_id)->count();
+
+        $postData['appid'] = (int)$order->client_id;
+        $postData['event'] = [
+            "TYPE" => "EVENT_PAY_ORDER_CONFIRM",
+            "Data" => [
+                "OrderID" => (string)$order->id,
+                "UserID" => (string)$order->user_id,
+                "AppID" => (string)$order->client_id,
+                "CurrencyType" => "CNY",
+                "CurrencyAmount" => (string)$order->price,
+                "SubmitTime" => (string)$order->update_at,
+                "AccountStatus" => (string)$user->status,
+                "isFirstPay" => $isFirstPay > 0 ? false : true,
+            ]
         ];
+        $postData['serverid'] = isset($postInfo['server_id']) ? (int)$postInfo['server_id'] : 1;
+        $postData['ts'] = time();
+        $postData['sign'] = md5($postData['appid'] . $postData['ts']);
 
         /**
          * 队列发送通知到服务端
