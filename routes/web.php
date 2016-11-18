@@ -51,6 +51,16 @@ Route::group(['prefix' => 'console'], function () {
     Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 
 });
+// 配置信息
+Route::group(['prefix' => 'config'], function () {
+    Route::get('/qiniu', function () {
+        $disk = \Storage::disk('qiniu');
+        $data['base_url'] = config('filesystems.disks.qiniu.domains.custom') ?: config('filesystems.disks.qiniu.domains.default');
+        $data['upload_token'] = $disk->uploadToken();
+        return $data;
+    });
+});
+
 
 Route::get('/test/hashids/{id}', function ($id) {
     return Hashids::encode($id);

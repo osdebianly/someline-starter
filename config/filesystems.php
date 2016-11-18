@@ -62,6 +62,19 @@ return [
             'bucket' => 'your-bucket',
         ],
 
+        'qiniu' => [
+            'driver' => 'qiniu',
+            'domains' => [
+                'default' => 'ogtr66n6z.bkt.clouddn.com', //你的七牛域名
+                'https' => '',         //你的HTTPS域名
+                'custom' => '',                //你的自定义域名
+            ],
+            'access_key' => 'vhFhOFn0NQOR6LysU8EaF_onN45HylNFAF-Fgwkm',  //AccessKey
+            'secret_key' => 'mcJgHXnjtEDsW7Q04rD50PZaZU3IBO5M8a04WtpZ',  //SecretKey
+            'bucket' => 'fish-new',  //Bucket名字
+            'notify_url' => '',  //持久化处理回调地址
+        ],
+
     ],
 
 ];

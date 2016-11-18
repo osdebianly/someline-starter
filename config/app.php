@@ -211,7 +211,11 @@ return [
          * Hashids
          */
 
-        Vinkla\Hashids\HashidsServiceProvider::class
+        Vinkla\Hashids\HashidsServiceProvider::class,
+        /**
+         * 七牛SDK
+         */
+        zgldh\QiniuStorage\QiniuFilesystemServiceProvider::class,
 
     ],
 

@@ -14,7 +14,8 @@
         "lokielse/omnipay-wechatpay": "dev-master",
         "toplan/laravel-sms": "2.5.*",
         "frozennode/administrator": " 5.*",
-        "vinkla/hashids": "^2.4"
+        "vinkla/hashids": "^2.4",
+        "zgldh/qiniu-laravel-storage": "^0.6.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
