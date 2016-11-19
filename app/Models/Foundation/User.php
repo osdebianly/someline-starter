@@ -13,7 +13,7 @@ use Klaravel\Ntrust\Traits\NtrustUserTrait;
 class User extends BaseUser
 {
 
-    use NtrustUserTrait;
+    //use NtrustUserTrait;
     protected static $roleProfile = 'user';
 
     /**

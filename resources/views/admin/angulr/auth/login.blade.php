@@ -1,4 +1,4 @@
-@extends('angulr.auth.auth_base')
+@extends('admin.angulr.auth.auth_base')
 
 @section('content')
     <div class="wrapper text-center">
@@ -13,7 +13,7 @@
         @endif
         <div class="list-group list-group-sm">
             <div class="list-group-item">
-                <input type="text" placeholder="UserName" class="form-control no-border" name="email"
+                <input type="email" placeholder="Email" class="form-control no-border" name="email"
                        value="{{ old('email') }}" required>
             </div>
             <div class="list-group-item">

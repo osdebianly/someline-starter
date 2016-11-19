@@ -61,6 +61,12 @@ Route::group(['prefix' => 'config'], function () {
     });
 });
 
+/**
+ * 管理员
+ */
+Route::group(['prefix' => 'admin'], function () {
+    Route::get('/', 'Admin\HomeController@index');
+});
 
 Route::get('/test/hashids/{id}', function ($id) {
     return Hashids::encode($id);
