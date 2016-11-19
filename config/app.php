@@ -206,7 +206,7 @@ return [
         /**
          * Administrator
          */
-        Frozennode\Administrator\AdministratorServiceProvider::class,
+        //Frozennode\Administrator\AdministratorServiceProvider::class,
         /**
          * Hashids
          */
