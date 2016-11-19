@@ -7,9 +7,14 @@
 namespace Someline\Models\Foundation;
 
 use Someline\Model\Foundation\User as BaseUser;
+use Klaravel\Ntrust\Traits\NtrustUserTrait;
+
 
 class User extends BaseUser
 {
+
+    use NtrustUserTrait;
+    protected static $roleProfile = 'user';
 
     /**
      * The attributes that are mass assignable.

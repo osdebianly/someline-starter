@@ -60,5 +60,10 @@ class Kernel extends HttpKernel
         // Passport
         'scopes' => \Laravel\Passport\Http\Middleware\CheckScopes::class,
         'scope' => \Laravel\Passport\Http\Middleware\CheckForAnyScope::class,
+
+        // RBAC
+        'role' => \Klaravel\Ntrust\Middleware\NtrustRole::class,
+        'permission' => \Klaravel\Ntrust\Middleware\NtrustPermission::class,
+        'ability' => \Klaravel\Ntrust\Middleware\NtrustAbility::class,
     ];
 }

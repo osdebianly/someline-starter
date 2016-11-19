@@ -216,6 +216,11 @@ return [
          * 七牛SDK
          */
         zgldh\QiniuStorage\QiniuFilesystemServiceProvider::class,
+        /**
+         * RBAC
+         */
+        Klaravel\Ntrust\NtrustServiceProvider::class,
+
 
     ],
 
@@ -272,7 +277,8 @@ return [
         'Omnipay' => Ignited\LaravelOmnipay\Facades\OmnipayFacade::class,
         'PhpSms' => Toplan\PhpSms\Facades\Sms::class,
         'SmsManager' => Toplan\Sms\Facades\SmsManager::class,
-        'Hashids' => Vinkla\Hashids\Facades\Hashids::class
+        'Hashids' => Vinkla\Hashids\Facades\Hashids::class,
+        'Ntrust' => Klaravel\Ntrust\NtrustFacade::class,
 
     ],
 

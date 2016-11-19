@@ -66,6 +66,22 @@ return [
             'engine' => null,
         ],
 
+        /**
+         * 第二个数据库
+         * 使用: Model 文件-> protected $connection = 'mysql2';
+         */
+
+        'mysql2' => array(
+            'driver' => 'mysql',
+            'host' => 'localhost',
+            'database' => 'framework',
+            'username' => 'root',
+            'password' => 'knwall',
+            'charset' => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix' => '',
+        ),
+
         'pgsql' => [
             'driver' => 'pgsql',
             'host' => env('DB_HOST', 'localhost'),
