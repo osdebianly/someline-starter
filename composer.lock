@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "fe32457d873d7c0fb142ab416e8894c7",
-    "content-hash": "c39a5aa248973ed667aaf76939deff4a",
+    "hash": "5083de243c3e5d565cdccdad58b47dd6",
+    "content-hash": "8f7485478dbdf62587f16547939388f2",
     "packages": [
         {
             "name": "barryvdh/laravel-ide-helper",
@@ -124,16 +124,16 @@
         },
         {
             "name": "ckeditor/ckeditor",
-            "version": "4.5.11",
+            "version": "4.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ckeditor/ckeditor-releases.git",
-                "reference": "48155a1e1c7e84736b5a166ad3f33acea2a51255"
+                "reference": "2530c9c5d26f275882da192ba2231ac69e967474"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://packagist.phpcomposer.com/files/ckeditor/ckeditor-releases/48155a1e1c7e84736b5a166ad3f33acea2a51255.zip",
-                "reference": "48155a1e1c7e84736b5a166ad3f33acea2a51255",
+                "url": "https://packagist.phpcomposer.com/files/ckeditor/ckeditor-releases/2530c9c5d26f275882da192ba2231ac69e967474.zip",
+                "reference": "2530c9c5d26f275882da192ba2231ac69e967474",
                 "shasum": ""
             },
             "type": "library",
@@ -161,7 +161,7 @@
                 "text",
                 "wysiwyg"
             ],
-            "time": "2016-09-07 13:32:39"
+            "time": "2016-11-16 15:14:40"
         },
         {
             "name": "classpreloader/classpreloader",
@@ -1108,16 +1108,16 @@
         },
         {
             "name": "giggsey/libphonenumber-for-php",
-            "version": "7.7.3",
+            "version": "7.7.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/giggsey/libphonenumber-for-php.git",
-                "reference": "e55e956a7a8211af3dfbd9dd5372ccc5eb79e495"
+                "reference": "1f7ab8d8c0d56385e6d19b118e3827a526b85323"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://packagist.phpcomposer.com/files/giggsey/libphonenumber-for-php/e55e956a7a8211af3dfbd9dd5372ccc5eb79e495.zip",
-                "reference": "e55e956a7a8211af3dfbd9dd5372ccc5eb79e495",
+                "url": "https://packagist.phpcomposer.com/files/giggsey/libphonenumber-for-php/1f7ab8d8c0d56385e6d19b118e3827a526b85323.zip",
+                "reference": "1f7ab8d8c0d56385e6d19b118e3827a526b85323",
                 "shasum": ""
             },
             "require": {
@@ -1166,7 +1166,7 @@
                 "phonenumber",
                 "validation"
             ],
-            "time": "2016-10-26 13:35:16"
+            "time": "2016-11-10 12:34:17"
         },
         {
             "name": "giggsey/locale",
@@ -1436,16 +1436,16 @@
         },
         {
             "name": "guzzlehttp/promises",
-            "version": "1.2.0",
+            "version": "1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/promises.git",
-                "reference": "c10d860e2a9595f8883527fa0021c7da9e65f579"
+                "reference": "2693c101803ca78b27972d84081d027fca790a1e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/promises/zipball/c10d860e2a9595f8883527fa0021c7da9e65f579",
-                "reference": "c10d860e2a9595f8883527fa0021c7da9e65f579",
+                "url": "https://packagist.phpcomposer.com/files/guzzle/promises/2693c101803ca78b27972d84081d027fca790a1e.zip",
+                "reference": "2693c101803ca78b27972d84081d027fca790a1e",
                 "shasum": ""
             },
             "require": {
@@ -1483,7 +1483,7 @@
             "keywords": [
                 "promise"
             ],
-            "time": "2016-05-18 16:56:05"
+            "time": "2016-11-18 17:47:58"
         },
         {
             "name": "guzzlehttp/psr7",
@@ -1952,54 +1952,6 @@
             "time": "2015-12-05 17:17:57"
         },
         {
-            "name": "klaravel/ntrust",
-            "version": "v1.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/klaravel/ntrust.git",
-                "reference": "8f801ece52943792ebe7ac34b6b6458d14a5c522"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://packagist.phpcomposer.com/files/klaravel/ntrust/8f801ece52943792ebe7ac34b6b6458d14a5c522.zip",
-                "reference": "8f801ece52943792ebe7ac34b6b6458d14a5c522",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/cache": "5.*",
-                "illuminate/console": "5.*",
-                "illuminate/support": "5.*"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Klaravel\\Ntrust\\": "src/Ntrust"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Keyur Ajmera",
-                    "email": "ajmerainfo@gmail.com"
-                }
-            ],
-            "description": "Role-Based Permissions for Laravel 5.3+",
-            "keywords": [
-                "admin",
-                "laravel",
-                "ntrust",
-                "permissions",
-                "role",
-                "trust",
-                "user",
-                "user role permissions"
-            ],
-            "time": "2016-10-22 06:19:09"
-        },
-        {
             "name": "laravel/framework",
             "version": "v5.3.10",
             "source": {
@@ -2129,16 +2081,16 @@
         },
         {
             "name": "laravel/passport",
-            "version": "v1.0.9",
+            "version": "v1.0.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/passport.git",
-                "reference": "e5b96c9da0b2ee8c080a35647e01587fd8c2263b"
+                "reference": "0e8fe951996ed2a60b0b9a4012e21601a284f035"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://packagist.phpcomposer.com/files/laravel/passport/e5b96c9da0b2ee8c080a35647e01587fd8c2263b.zip",
-                "reference": "e5b96c9da0b2ee8c080a35647e01587fd8c2263b",
+                "url": "https://packagist.phpcomposer.com/files/laravel/passport/0e8fe951996ed2a60b0b9a4012e21601a284f035.zip",
+                "reference": "0e8fe951996ed2a60b0b9a4012e21601a284f035",
                 "shasum": ""
             },
             "require": {
@@ -2189,7 +2141,7 @@
                 "oauth",
                 "passport"
             ],
-            "time": "2016-10-27 19:10:18"
+            "time": "2016-11-18 17:58:03"
         },
         {
             "name": "lcobucci/jwt",
@@ -2568,12 +2520,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/lokielse/omnipay-alipay.git",
-                "reference": "9106032072b2905fa5f92f02c28fed938a35d236"
+                "reference": "f4f9ad9286b6f418b3363f782d98c12ffc9bbfe1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://packagist.phpcomposer.com/files/lokielse/omnipay-alipay/9106032072b2905fa5f92f02c28fed938a35d236.zip",
-                "reference": "9106032072b2905fa5f92f02c28fed938a35d236",
+                "url": "https://packagist.phpcomposer.com/files/lokielse/omnipay-alipay/f4f9ad9286b6f418b3363f782d98c12ffc9bbfe1.zip",
+                "reference": "f4f9ad9286b6f418b3363f782d98c12ffc9bbfe1",
                 "shasum": ""
             },
             "require": {
@@ -2613,7 +2565,7 @@
                 "payment",
                 "purchase"
             ],
-            "time": "2016-10-11 09:39:27"
+            "time": "2016-11-10 09:39:58"
         },
         {
             "name": "lokielse/omnipay-wechatpay",
@@ -2621,12 +2573,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/lokielse/omnipay-wechatpay.git",
-                "reference": "4e875baf8788520fb7461037f8277a67c361a891"
+                "reference": "ebf4c238023b196715e734ea68bb10d06c0ac329"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://packagist.phpcomposer.com/files/lokielse/omnipay-wechatpay/4e875baf8788520fb7461037f8277a67c361a891.zip",
-                "reference": "4e875baf8788520fb7461037f8277a67c361a891",
+                "url": "https://packagist.phpcomposer.com/files/lokielse/omnipay-wechatpay/ebf4c238023b196715e734ea68bb10d06c0ac329.zip",
+                "reference": "ebf4c238023b196715e734ea68bb10d06c0ac329",
                 "shasum": ""
             },
             "require": {
@@ -2665,7 +2617,7 @@
                 "wechat",
                 "微信支付"
             ],
-            "time": "2016-10-10 09:00:10"
+            "time": "2016-11-13 17:57:13"
         },
         {
             "name": "lukasoppermann/http-status",
@@ -3222,16 +3174,16 @@
         },
         {
             "name": "paragonie/random_compat",
-            "version": "v2.0.3",
+            "version": "v2.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/random_compat.git",
-                "reference": "c0125896dbb151380ab47e96c621741e79623beb"
+                "reference": "a9b97968bcde1c4de2a5ec6cbd06a0f6c919b46e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://packagist.phpcomposer.com/files/paragonie/random_compat/c0125896dbb151380ab47e96c621741e79623beb.zip",
-                "reference": "c0125896dbb151380ab47e96c621741e79623beb",
+                "url": "https://packagist.phpcomposer.com/files/paragonie/random_compat/a9b97968bcde1c4de2a5ec6cbd06a0f6c919b46e.zip",
+                "reference": "a9b97968bcde1c4de2a5ec6cbd06a0f6c919b46e",
                 "shasum": ""
             },
             "require": {
@@ -3266,7 +3218,7 @@
                 "pseudorandom",
                 "random"
             ],
-            "time": "2016-10-17 15:23:22"
+            "time": "2016-11-07 23:38:38"
         },
         {
             "name": "phpdocumentor/reflection-common",
@@ -4120,16 +4072,16 @@
         },
         {
             "name": "someline/starter-framework",
-            "version": "v1.3.17",
+            "version": "v1.3.18",
             "source": {
                 "type": "git",
                 "url": "https://github.com/someline/starter-framework.git",
-                "reference": "41d14d080ed1c6357688e825271285eba2e45e85"
+                "reference": "699c8d233db1ca2d95d163b99e5c97a70697e5ec"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/someline/starter-framework/zipball/41d14d080ed1c6357688e825271285eba2e45e85",
-                "reference": "41d14d080ed1c6357688e825271285eba2e45e85",
+                "url": "https://packagist.phpcomposer.com/files/someline/starter-framework/699c8d233db1ca2d95d163b99e5c97a70697e5ec.zip",
+                "reference": "699c8d233db1ca2d95d163b99e5c97a70697e5ec",
                 "shasum": ""
             },
             "require": {
@@ -4194,7 +4146,7 @@
                 "someline",
                 "starter-framework"
             ],
-            "time": "2016-09-27 13:23:50"
+            "time": "2016-11-17 09:18:51"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -4669,16 +4621,16 @@
         },
         {
             "name": "symfony/polyfill-mbstring",
-            "version": "v1.2.0",
+            "version": "v1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "dff51f72b0706335131b00a7f49606168c582594"
+                "reference": "e79d363049d1c2128f133a2667e4f4190904f7f4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/dff51f72b0706335131b00a7f49606168c582594",
-                "reference": "dff51f72b0706335131b00a7f49606168c582594",
+                "url": "https://packagist.phpcomposer.com/files/symfony/polyfill-mbstring/e79d363049d1c2128f133a2667e4f4190904f7f4.zip",
+                "reference": "e79d363049d1c2128f133a2667e4f4190904f7f4",
                 "shasum": ""
             },
             "require": {
@@ -4690,7 +4642,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.2-dev"
+                    "dev-master": "1.3-dev"
                 }
             },
             "autoload": {
@@ -4724,20 +4676,20 @@
                 "portable",
                 "shim"
             ],
-            "time": "2016-05-18 14:26:46"
+            "time": "2016-11-14 01:06:16"
         },
         {
             "name": "symfony/polyfill-php56",
-            "version": "v1.2.0",
+            "version": "v1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-php56.git",
-                "reference": "3edf57a8fbf9a927533344cef65ad7e1cf31030a"
+                "reference": "1dd42b9b89556f18092f3d1ada22cb05ac85383c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-php56/zipball/3edf57a8fbf9a927533344cef65ad7e1cf31030a",
-                "reference": "3edf57a8fbf9a927533344cef65ad7e1cf31030a",
+                "url": "https://packagist.phpcomposer.com/files/symfony/polyfill-php56/1dd42b9b89556f18092f3d1ada22cb05ac85383c.zip",
+                "reference": "1dd42b9b89556f18092f3d1ada22cb05ac85383c",
                 "shasum": ""
             },
             "require": {
@@ -4747,7 +4699,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.2-dev"
+                    "dev-master": "1.3-dev"
                 }
             },
             "autoload": {
@@ -4780,20 +4732,20 @@
                 "portable",
                 "shim"
             ],
-            "time": "2016-05-18 14:26:46"
+            "time": "2016-11-14 01:06:16"
         },
         {
             "name": "symfony/polyfill-util",
-            "version": "v1.2.0",
+            "version": "v1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-util.git",
-                "reference": "ef830ce3d218e622b221d6bfad42c751d974bf99"
+                "reference": "746bce0fca664ac0a575e465f65c6643faddf7fb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-util/zipball/ef830ce3d218e622b221d6bfad42c751d974bf99",
-                "reference": "ef830ce3d218e622b221d6bfad42c751d974bf99",
+                "url": "https://packagist.phpcomposer.com/files/symfony/polyfill-util/746bce0fca664ac0a575e465f65c6643faddf7fb.zip",
+                "reference": "746bce0fca664ac0a575e465f65c6643faddf7fb",
                 "shasum": ""
             },
             "require": {
@@ -4802,7 +4754,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.2-dev"
+                    "dev-master": "1.3-dev"
                 }
             },
             "autoload": {
@@ -4832,7 +4784,7 @@
                 "polyfill",
                 "shim"
             ],
-            "time": "2016-05-18 14:26:46"
+            "time": "2016-11-14 01:06:16"
         },
         {
             "name": "symfony/process",
@@ -5809,16 +5761,16 @@
         },
         {
             "name": "mockery/mockery",
-            "version": "0.9.5",
+            "version": "0.9.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/padraic/mockery.git",
-                "reference": "4db079511a283e5aba1b3c2fb19037c645e70fc2"
+                "reference": "65d4ca18e15cb02eeb1e5336f884e46b9b905be0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/padraic/mockery/zipball/4db079511a283e5aba1b3c2fb19037c645e70fc2",
-                "reference": "4db079511a283e5aba1b3c2fb19037c645e70fc2",
+                "url": "https://packagist.phpcomposer.com/files/padraic/mockery/65d4ca18e15cb02eeb1e5336f884e46b9b905be0.zip",
+                "reference": "65d4ca18e15cb02eeb1e5336f884e46b9b905be0",
                 "shasum": ""
             },
             "require": {
@@ -5870,7 +5822,7 @@
                 "test double",
                 "testing"
             ],
-            "time": "2016-05-22 21:52:33"
+            "time": "2016-09-30 12:09:40"
         },
         {
             "name": "myclabs/deep-copy",
@@ -6173,16 +6125,16 @@
         },
         {
             "name": "phpunit/php-token-stream",
-            "version": "1.4.8",
+            "version": "1.4.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-token-stream.git",
-                "reference": "3144ae21711fb6cac0b1ab4cbe63b75ce3d4e8da"
+                "reference": "3b402f65a4cc90abf6e1104e388b896ce209631b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-token-stream/zipball/3144ae21711fb6cac0b1ab4cbe63b75ce3d4e8da",
-                "reference": "3144ae21711fb6cac0b1ab4cbe63b75ce3d4e8da",
+                "url": "https://packagist.phpcomposer.com/files/sebastianbergmann/php-token-stream/3b402f65a4cc90abf6e1104e388b896ce209631b.zip",
+                "reference": "3b402f65a4cc90abf6e1104e388b896ce209631b",
                 "shasum": ""
             },
             "require": {
@@ -6218,20 +6170,20 @@
             "keywords": [
                 "tokenizer"
             ],
-            "time": "2015-09-15 10:49:45"
+            "time": "2016-11-15 14:06:22"
         },
         {
             "name": "phpunit/phpunit",
-            "version": "5.6.2",
+            "version": "5.6.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "cd13b23ac5a519a4708e00736c26ee0bb28b2e01"
+                "reference": "4ddb822f1de421b4cadb47570a525fd7d9359493"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://packagist.phpcomposer.com/files/sebastianbergmann/phpunit/cd13b23ac5a519a4708e00736c26ee0bb28b2e01.zip",
-                "reference": "cd13b23ac5a519a4708e00736c26ee0bb28b2e01",
+                "url": "https://packagist.phpcomposer.com/files/sebastianbergmann/phpunit/4ddb822f1de421b4cadb47570a525fd7d9359493.zip",
+                "reference": "4ddb822f1de421b4cadb47570a525fd7d9359493",
                 "shasum": ""
             },
             "require": {
@@ -6259,7 +6211,9 @@
                 "symfony/yaml": "~2.1|~3.0"
             },
             "conflict": {
-                "phpdocumentor/reflection-docblock": "3.0.2"
+                "phpdocumentor/reflection-docblock": "3.0.2",
+                "sebastian/object-enumerator": "1.0.1",
+                "sebastian/recursion-context": "1.0.3 || 1.0.4"
             },
             "require-dev": {
                 "ext-pdo": "*"
@@ -6300,7 +6254,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2016-10-25 07:40:25"
+            "time": "2016-11-18 09:50:51"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -6408,16 +6362,16 @@
         },
         {
             "name": "sebastian/comparator",
-            "version": "1.2.0",
+            "version": "1.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/comparator.git",
-                "reference": "937efb279bd37a375bcadf584dec0726f84dbf22"
+                "reference": "ce2bda23a56456f19e35d98241446b581f648c14"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/comparator/zipball/937efb279bd37a375bcadf584dec0726f84dbf22",
-                "reference": "937efb279bd37a375bcadf584dec0726f84dbf22",
+                "url": "https://packagist.phpcomposer.com/files/sebastianbergmann/comparator/ce2bda23a56456f19e35d98241446b581f648c14.zip",
+                "reference": "ce2bda23a56456f19e35d98241446b581f648c14",
                 "shasum": ""
             },
             "require": {
@@ -6468,7 +6422,7 @@
                 "compare",
                 "equality"
             ],
-            "time": "2015-07-26 15:48:44"
+            "time": "2016-11-17 14:39:37"
         },
         {
             "name": "sebastian/diff",
