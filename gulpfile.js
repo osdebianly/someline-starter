@@ -1,6 +1,8 @@
 const elixir = require('laravel-elixir');
+const path = require('path');
 
-require('laravel-elixir-vue');
+require('laravel-elixir-vue-2');
+require('laravel-elixir-webpack-official');
 
 /*
  |--------------------------------------------------------------------------
@@ -12,6 +14,28 @@ require('laravel-elixir-vue');
  | file for our application, as well as publishing vendor resources.
  |
  */
+
+Elixir.webpack.config.module.loaders = [];
+
+Elixir.webpack.mergeConfig({
+    resolveLoader: {
+        root: path.join(__dirname, 'node_modules'),
+    },
+    module: {
+        loaders: [
+            {
+                test: /\.js$/,
+                loader: 'babel',
+                exclude: /node_modules/
+            },
+            {
+                test: /\.css$/,
+                loader: 'style!css'
+            }
+        ]
+    }
+});
+
 
 elixir(mix => {
     mix.sass('app.scss')

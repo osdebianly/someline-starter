@@ -42,5 +42,8 @@ export default{
 
             return (isMobile.matches);
         },
+        toString($value){
+            return $value.toString();
+        }
     }
 }

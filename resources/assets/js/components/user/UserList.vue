@@ -41,7 +41,7 @@
                 Accept: 'application/x.someline.v1+json'
             }
         },
-        ready() {
+        mounted() {
             console.log('User List Ready.');
 
             var resource = this.$resource('users', {

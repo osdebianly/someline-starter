@@ -11,6 +11,10 @@ Vue.directive('focus', require('./directives/focus'));
 
 // Vue Filters
 Vue.filter('nl2br', require('./filters/nl2br'));
+Vue.filter('booleanFormat', require('./filters/booleanFormatter'));
+Vue.filter('percentageFormat', require('./filters/percentageFormatter'));
+Vue.filter('byteFormat', require('./filters/byteFormatter'));
+Vue.filter('timestampFormat', require('./filters/timestampFormatter'));
 
 // Vue Mixins
 import MixInUser from './mixins/user'
@@ -19,6 +23,11 @@ import MixInTools from './mixins/tools'
 Vue.mixin(MixInUser);
 Vue.mixin(MixInJQuery);
 Vue.mixin(MixInTools);
+// Vue Element
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-default/index.css';
+
+Vue.use(ElementUI);
 
 // Vue Components
 Vue.component('autosize-textarea', require('./essentials/autosize-textarea.vue'));
@@ -28,6 +37,7 @@ Vue.component('autosize-textarea', require('./essentials/autosize-textarea.vue')
  * the body of the page. From here, you may begin adding components to
  * the application, or feel free to tweak this setup for your needs.
  */
+
 
 Vue.component(
     'passport-clients',
@@ -48,20 +58,18 @@ Vue.component('example', require('./components/Example.vue'));
 Vue.component('sl-user-list', require('./components/user/UserList.vue'));
 Vue.component('sl-oauth', require('./components/console/OAuth.vue'));
 
+Vue.component('menu-list', require('./components/menu/MenuList.vue'));
+
+
+
 const app = new Vue({
-    el: 'body',
+    el: '#app',
     data: {
         msg: "hello",
     },
     methods: {
         initLocale(){
             console.log('Init Locale.');
-
-            var that = this;
-            var lang = this.locale;
-
-            Vue.config.lang = lang;
-            Vue.locale(lang, window.Someline.locales);
 
         },
     },
@@ -70,8 +78,32 @@ const app = new Vue({
     created(){
         console.log('Bootstrap.');
         this.initLocale();
-    },
-    ready(){
-        console.log('Ready.');
     }
 });
+// const app = new Vue({
+//     el: 'body',
+//     data: {
+//         msg: "hello",
+//     },
+//     methods: {
+//         initLocale(){
+//             console.log('Init Locale.');
+//
+//             var that = this;
+//             var lang = this.locale;
+//
+//             Vue.config.lang = lang;
+//             Vue.locale(lang, window.Someline.locales);
+//
+//         },
+//     },
+//     watch: {},
+//     events: {},
+//     created(){
+//         console.log('Bootstrap.');
+//         this.initLocale();
+//     },
+//     mounted(){
+//         console.log('Ready.');
+//     }
+// });

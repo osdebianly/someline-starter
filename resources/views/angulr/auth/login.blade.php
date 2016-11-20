@@ -13,7 +13,7 @@
         @endif
         <div class="list-group list-group-sm">
             <div class="list-group-item">
-                <input type="text" placeholder="UserName" class="form-control no-border" name="email"
+                <input type="text" placeholder="Email" class="form-control no-border" name="email"
                        value="{{ old('email') }}" required>
             </div>
             <div class="list-group-item">
