@@ -20,12 +20,12 @@
                     </a>
                 </li>
                 <li>
-                    <a href="index.html">
+                    <a href="">
                         <span>Dashboard v1</span>
                     </a>
                 </li>
                 <li>
-                    <a href="dashboard.html">
+                    <a href="">
                         <b class="label bg-info pull-right">N</b>
                         <span>Dashboard v2</span>
                     </a>
@@ -33,7 +33,29 @@
             </ul>
         </li>
         <li>
-            <a href="mail.html">
+            <a href class="auto">
+                  <span class="pull-right text-muted">
+                    <i class="fa fa-fw fa-angle-right text"></i>
+                    <i class="fa fa-fw fa-angle-down text-active"></i>
+                  </span>
+                <i class="glyphicon glyphicon-stats icon text-primary-dker"></i>
+                <span class="font-bold">系统设置</span>
+            </a>
+            <ul class="nav nav-sub dk">
+                <li>
+                    <a href="{{ url('admin/role') }}">
+                        <span>角色管理</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url('admin/permission') }}">
+                        <span>权限管理</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="">
                 <b class="badge bg-info pull-right">9</b>
                 <i class="glyphicon glyphicon-envelope icon text-info-lter"></i>
                 <span class="font-bold">Email</span>

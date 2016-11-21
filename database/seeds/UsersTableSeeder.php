@@ -34,7 +34,7 @@ class UsersTableSeeder extends Seeder
         User::create([
 //            'slid' => '1',
             'name' => "lyfing",
-            'email' => 'lyfing@someline.com',
+            'email' => 'lyfing@lyfing.dev',
             'password' => bcrypt('123456'),
             'remember_token' => str_random(10),
             'gender' => 'M',

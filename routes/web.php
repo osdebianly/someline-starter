@@ -70,6 +70,12 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function ($router) {
     $router->post('logout', 'LoginController@logout');
 
     $router->get('dash', 'DashboardController@index');
+    Route::group(['prefix' => 'roles'], function ($router) {
+        $router->get('', 'RoleController@index');
+        $router->get('all', 'RoleController@all');
+
+    });
+
 });
 
 Route::get('/test/hashids/{id}', function ($id) {

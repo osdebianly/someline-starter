@@ -59,6 +59,7 @@ Vue.component('sl-user-list', require('./components/user/UserList.vue'));
 Vue.component('sl-oauth', require('./components/console/OAuth.vue'));
 
 Vue.component('menu-list', require('./components/menu/MenuList.vue'));
+Vue.component('role-list', require('./components/role/RoleList.vue'));
 
 
 
