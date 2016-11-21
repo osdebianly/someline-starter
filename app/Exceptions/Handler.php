@@ -44,6 +44,11 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if ($exception instanceof \GeniusTS\Roles\Exceptions\RoleDeniedException) {
+            // you can for example flash message, redirect...
+            return redirect()->back();
+        }
+
         return parent::render($request, $exception);
     }
 

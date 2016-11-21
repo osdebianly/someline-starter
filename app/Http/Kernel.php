@@ -62,9 +62,9 @@ class Kernel extends HttpKernel
         'scope' => \Laravel\Passport\Http\Middleware\CheckForAnyScope::class,
 
         // RBAC
-        'role' => \Klaravel\Ntrust\Middleware\NtrustRole::class,
-        'permission' => \Klaravel\Ntrust\Middleware\NtrustPermission::class,
-        'ability' => \Klaravel\Ntrust\Middleware\NtrustAbility::class,
+        'role' => \GeniusTS\Roles\Middleware\VerifyRole::class,
+        'permission' => \GeniusTS\Roles\Middleware\VerifyPermission::class,
+        'level' => \GeniusTS\Roles\Middleware\VerifyLevel::class,
         //admin
         'auth.admin' => \Someline\Http\Middleware\AdminAuthMiddleware::class,
     ];

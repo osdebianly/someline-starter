@@ -6,9 +6,14 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Admin extends Authenticatable
+use GeniusTS\Roles\Traits\HasRoleAndPermission;
+use GeniusTS\Roles\Contracts\HasRoleAndPermission as HasRoleAndPermissionContract;
+
+class Admin extends Authenticatable implements HasRoleAndPermissionContract
 {
     use Notifiable;
+
+    use HasRoleAndPermission;
 
     /**
      * The attributes that are mass assignable.
