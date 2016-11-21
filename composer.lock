@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "bbb81e8325197e076bd0689a144c0f81",
-    "content-hash": "b36fe99b60845c00b3cd27248722ae33",
+    "hash": "249d6ca674b26032c17b61a260dc244b",
+    "content-hash": "618a27dca25e9af0459a66627004a638",
     "packages": [
         {
             "name": "barryvdh/laravel-ide-helper",
@@ -1856,6 +1856,54 @@
                 "tokenizer"
             ],
             "time": "2015-12-05 17:17:57"
+        },
+        {
+            "name": "klaravel/ntrust",
+            "version": "v1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/klaravel/ntrust.git",
+                "reference": "8f801ece52943792ebe7ac34b6b6458d14a5c522"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://packagist.phpcomposer.com/files/klaravel/ntrust/8f801ece52943792ebe7ac34b6b6458d14a5c522.zip",
+                "reference": "8f801ece52943792ebe7ac34b6b6458d14a5c522",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/cache": "5.*",
+                "illuminate/console": "5.*",
+                "illuminate/support": "5.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Klaravel\\Ntrust\\": "src/Ntrust"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Keyur Ajmera",
+                    "email": "ajmerainfo@gmail.com"
+                }
+            ],
+            "description": "Role-Based Permissions for Laravel 5.3+",
+            "keywords": [
+                "admin",
+                "laravel",
+                "ntrust",
+                "permissions",
+                "role",
+                "trust",
+                "user",
+                "user role permissions"
+            ],
+            "time": "2016-10-22 06:19:09"
         },
         {
             "name": "laravel/framework",

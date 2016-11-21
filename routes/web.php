@@ -64,8 +64,12 @@ Route::group(['prefix' => 'config'], function () {
 /**
  * 管理员
  */
-Route::group(['prefix' => 'admin'], function () {
-    Route::get('/', 'Admin\HomeController@index');
+Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function ($router) {
+    $router->get('login', 'LoginController@showLoginForm')->name('admin.login');
+    $router->post('login', 'LoginController@login');
+    $router->post('logout', 'LoginController@logout');
+
+    $router->get('dash', 'DashboardController@index');
 });
 
 Route::get('/test/hashids/{id}', function ($id) {

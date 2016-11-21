@@ -29,3 +29,14 @@ $factory->define(\Someline\Models\Foundation\User::class, function (Faker\Genera
         'status' => 1,
     ];
 });
+
+$factory->define(\Someline\Models\Foundation\Admin::class, function (Faker\Generator $faker) {
+    static $password;
+
+    return [
+        'name' => $faker->name,
+        'email' => $faker->safeEmail,
+        'password' => $password ?: $password = bcrypt('secret'),
+        'remember_token' => str_random(10),
+    ];
+});

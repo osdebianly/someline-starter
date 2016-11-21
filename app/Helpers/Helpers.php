@@ -154,3 +154,11 @@ if (!function_exists('username_generate')) {
         return 'u' . hashid_encode(time() . random_int(100, 999));
     }
 }
+
+if (!function_exists('current_admin')) {
+
+    function current_admin()
+    {
+        return auth('admin')->user();
+    }
+}

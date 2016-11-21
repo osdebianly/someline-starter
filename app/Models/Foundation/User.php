@@ -13,8 +13,8 @@ use Klaravel\Ntrust\Traits\NtrustUserTrait;
 class User extends BaseUser
 {
 
-    //use NtrustUserTrait;
-    //protected static $roleProfile = 'user';
+    use NtrustUserTrait;
+    protected static $roleProfile = 'user';
 
     /**
      * The attributes that are mass assignable.
@@ -60,16 +60,16 @@ class User extends BaseUser
 
 
     //自定义验证字段代替 email
-//    public function findForPassport($username)
-//    {
-//        $data['phone_number'] = $username;
-//        $validator = \Validator::make($data, [
-//            'phone_number' => 'required|zh_mobile'
-//        ]);
-//        if (!$validator->fails()) {
-//            return User::where('phone_number', $username)->first();
-//        }
-//        return User::where('username',$username)->first() ;
-//    }
+    public function findForPassport($username)
+    {
+        $data['phone_number'] = $username;
+        $validator = \Validator::make($data, [
+            'phone_number' => 'required|zh_mobile'
+        ]);
+        if (!$validator->fails()) {
+            return User::where('phone_number', $username)->first();
+        }
+        return User::where('username', $username)->first();
+    }
 
 }

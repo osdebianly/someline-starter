@@ -31,6 +31,6 @@
     </form>
     <!-- / search form -->
 
-    @include('admin.angulr.layout.parts.navbar.navbar_right')
+    {{--@include('admin.angulr.layout.parts.navbar.navbar_right')--}}
 </div>
 <!-- / navbar collapse -->

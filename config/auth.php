@@ -45,6 +45,10 @@ return [
             'driver' => 'passport',
             'provider' => 'users',
         ],
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admins',
+        ],
     ],
 
     /*
@@ -68,6 +72,10 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => \Someline\Models\Foundation\User::class,
+        ],
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => Someline\Models\Foundation\Admin::class,
         ],
 
         // 'users' => [
