@@ -120,10 +120,14 @@ class UsersController extends BaseController
 
             try {
                 $user = User::where('phone_number', $data['username'])->firstOrFail();
+                if (!Hash::check($data['password'], $user->password)) {
+                    throw new ResourceException('手机号或密码错误');
+                }
                 $data['username'] = $user->username;
             } catch (ModelNotFoundException $e) {
                 throw new ResourceException('该手机号码未绑定过');
             }
+
         } else {
 
             try {

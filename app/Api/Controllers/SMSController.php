@@ -240,6 +240,15 @@ class SMSController extends BaseController
             //SmsManager::forgetState();
             throw new ResourceException('验证码不正确');
         }
+        /**
+         * 校验该手机号码有没有占用
+         */
+
+        $count = User::where('phone_number', $request->mobile)->count();
+        if ($count) {
+            return ['status_code' => Status::HTTP_OK, 'message' => '该号码已绑定过'];
+        }
+        
         $user = current_auth_user();
         $user->phone_number = $request->mobile;
         $user->save();
