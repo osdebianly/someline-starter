@@ -195,7 +195,7 @@ class SMSController extends BaseController
          * 验证数据
          */
         $validator = Validator::make($request->all(), [
-            'mobile' => 'required|zh_mobile',
+            'mobile' => 'zh_mobile',
             'verifyCode' => 'required'
         ]);
         if ($validator->fails()) {
@@ -213,6 +213,38 @@ class SMSController extends BaseController
         $user->save();
 
         return ['status_code' => Status::HTTP_OK, 'message' => '解绑成功'];
+    }
+
+    /**
+     * 已登录用户绑定手机-短信
+     * @param Request $request
+     * @return array
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
+     */
+    public function bind(Request $request)
+    {
+        /**
+         * 验证数据
+         */
+        $validator = Validator::make($request->all(), [
+            'mobile' => 'required|zh_mobile',
+            'verifyCode' => 'required'
+        ]);
+        if ($validator->fails()) {
+            throw new ResourceException($validator->errors()->first());
+        }
+
+        //验证数据
+        if (!verify_sms_code()) {
+            //验证失败后建议清空存储的发送状态，防止用户重复试错
+            //SmsManager::forgetState();
+            throw new ResourceException('验证码不正确');
+        }
+        $user = current_auth_user();
+        $user->phone_number = $request->mobile;
+        $user->save();
+
+        return ['status_code' => Status::HTTP_OK, 'message' => '绑定成功'];
     }
 
 }

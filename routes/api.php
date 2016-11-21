@@ -102,6 +102,7 @@ $api->version('v1', [
         });
 
         $api->group(['prefix' => 'sms'], function (Router $api) {
+            $api->post('bind', 'SMSController@bind');
             $api->post('unbind', 'SMSController@unbind');
         });
 
