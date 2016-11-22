@@ -70,12 +70,23 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function ($router) {
     $router->post('logout', 'LoginController@logout');
 
     $router->get('dash', 'DashboardController@index');
+
     Route::group(['prefix' => 'roles'], function ($router) {
         $router->get('', 'RoleController@index');
         $router->get('all', 'RoleController@all');
+        $router->get('permissions/{id}', 'RoleController@permissions');
         $router->post('', 'RoleController@store');
         $router->put('{id}', 'RoleController@update');
         $router->delete('{id}', 'RoleController@destroy');
+
+    });
+    Route::group(['prefix' => 'permissions'], function ($router) {
+        $router->get('', 'PermissionController@index');
+        $router->get('all', 'PermissionController@all');
+        $router->get('list', 'PermissionController@list');
+        $router->post('', 'PermissionController@store');
+        $router->put('{id}', 'PermissionController@update');
+        $router->delete('{id}', 'PermissionController@destroy');
 
     });
 

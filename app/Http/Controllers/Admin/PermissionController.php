@@ -5,10 +5,10 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Someline\Http\Requests;
 use Someline\Http\Controllers\BaseController;
-use GeniusTS\Roles\Models\Role;
 use Someline\Models\Foundation\Permission;
 
-class RoleController extends BaseController
+
+class PermissionController extends BaseController
 {
 
     function __construct()
@@ -21,7 +21,7 @@ class RoleController extends BaseController
      */
     public function index()
     {
-        return view('admin.rbac.role');
+        return view('admin.rbac.permission');
     }
 
     /**
@@ -29,15 +29,16 @@ class RoleController extends BaseController
      */
     public function all()
     {
-
-        $roles = Role::all();
-        return $roles;
+        $permissions = Permission::all();
+        return $permissions;
     }
 
-    public function permissions(Request $request, $id)
+    /**
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    public function list(Permission $permission)
     {
-        $role = Role::find($id);
-        $permissions = $role->permissions()->get()->toArray();
+        $permissions = Permission::all()->toArray();
         return array_column($permissions, 'name');
     }
 
@@ -48,20 +49,14 @@ class RoleController extends BaseController
      */
     public function store(Request $request)
     {
-
         //todo 权限判断
 //        $admin = current_admin() ;
 //        if( is_null($admin) || $admin->email != config('admin.admin_email','admin@admin.com')){
 //            return response_message('仅限超级管理员操作') ;
 //        }
-        $role = $request->role;
-        $permissions = $request->permissions;
-        $role = Role::create($role);
+        $data = $request->only('name', 'slug', 'description', 'level');
 
-        foreach ($permissions as $permissionName) {
-            $permisstion = Permission::where('name', $permissionName)->first();
-            $role->attachPermission($permisstion);
-        }
+        $permission = Permission::create($data);
 
         return response_message();
 
@@ -79,19 +74,12 @@ class RoleController extends BaseController
 //        if( is_null($admin) || $admin->email != config('admin.admin_email','admin@admin.com')){
 //            return response_message('仅限超级管理员操作') ;
 //        }
-        $roleData = $request->roleData;
-        unset($roleData['id']);
-        $permissions = $request->permissionData;
+        $data = $request->only('name', 'slug', 'description', 'level');
         try {
-            $role = Role::findOrFail($id);
-            $role->update($roleData);
+            $permission = Permission::findOrFail($id);
+            $permission->update($data);
         } catch (ModelNotFoundException $e) {
             return response_message('该配置无效');
-        }
-
-        foreach ($permissions as $permissionName) {
-            $permisstion = Permission::where('name', $permissionName)->first();
-            $role->attachPermission($permisstion);
         }
 
         return response_message();
@@ -107,7 +95,7 @@ class RoleController extends BaseController
     public function destroy(Request $request, $id)
     {
         try {
-            Role::destroy($id);
+            Permission::destroy($id);
         } catch (ModelNotFoundException $e) {
             return response_message('该配置无效');
         }

@@ -12,7 +12,6 @@ use Someline\Model\Foundation\User as BaseUser;
 class User extends BaseUser
 {
 
-
     /**
      * The attributes that are mass assignable.
      *

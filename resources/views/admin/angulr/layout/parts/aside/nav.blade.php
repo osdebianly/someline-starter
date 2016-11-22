@@ -43,12 +43,12 @@
             </a>
             <ul class="nav nav-sub dk">
                 <li>
-                    <a href="{{ url('admin/role') }}">
+                    <a href="{{ url('admin/roles') }}">
                         <span>角色管理</span>
                     </a>
                 </li>
                 <li>
-                    <a href="{{ url('admin/permission') }}">
+                    <a href="{{ url('admin/permissions') }}">
                         <span>权限管理</span>
                     </a>
                 </li>

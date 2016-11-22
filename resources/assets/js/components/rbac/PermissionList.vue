@@ -16,12 +16,12 @@
             </el-table-column>
             <el-table-column
                     inline-template
-                    label="角色名称"
+                    label="权限名称"
                     width="180">
                 <el-popover trigger="hover" placement="top">
                     <p>名称: {{ row.name }}</p>
                     <p>角色: {{ row.slug }}</p>
-                    <p>等级: {{ row.level }}</p>
+                    <p>等级: {{ row.model }}</p>
                     <div slot="reference">
                         <el-tag>{{ row.name }}</el-tag>
                     </div>
@@ -87,9 +87,9 @@
             </el-table-column>
         </el-table>
 
-        <el-dialog title="编辑菜单" v-model="dialogFormVisible">
+        <el-dialog title="编辑权限" v-model="dialogFormVisible">
             <el-form :model="form">
-                <el-form-item label="角色名称" :label-width="formLabelWidth">
+                <el-form-item label="权限名称" :label-width="formLabelWidth">
                     <el-input v-model="form.name" auto-complete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="角色" :label-width="formLabelWidth">
@@ -98,8 +98,8 @@
                 <el-form-item label="描述" :label-width="formLabelWidth">
                     <el-input v-model="form.description" auto-complete="off"></el-input>
                 </el-form-item>
-                <el-form-item label="等级" :label-width="formLabelWidth">
-                    <el-input v-model="form.level" auto-complete="off"></el-input>
+                <el-form-item label="模型" :label-width="formLabelWidth">
+                    <el-input v-model="form.model" auto-complete="off"></el-input>
                 </el-form-item>
 
             </el-form>
@@ -197,7 +197,7 @@
         },
         mounted(){
             self = this;
-            resource = this.$resource('/admin/roles{/id}', {});
+            resource = this.$resource('/admin/permissions{/id}', {});
             this.initData();
         }
     }

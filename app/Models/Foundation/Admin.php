@@ -32,4 +32,14 @@ class Admin extends Authenticatable implements HasRoleAndPermissionContract
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * 用户角色
+     */
+    public function roles()
+    {
+        return $this->belongsToMany('Someline\Models\Foundation\Role');
+    }
+
+
 }
