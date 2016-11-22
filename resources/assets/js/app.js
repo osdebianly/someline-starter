@@ -61,6 +61,7 @@ Vue.component('sl-oauth', require('./components/console/OAuth.vue'));
 Vue.component('menu-list', require('./components/menu/MenuList.vue'));
 Vue.component('role-list', require('./components/rbac/RoleList.vue'));
 Vue.component('permission-list', require('./components/rbac/PermissionList.vue'));
+Vue.component('admin-list', require('./components/rbac/AdminList.vue'));
 
 
 

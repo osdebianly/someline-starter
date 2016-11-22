@@ -17,7 +17,7 @@
             <el-table-column
                     inline-template
                     label="权限名称"
-                    width="180">
+            >
                 <el-popover trigger="hover" placement="top">
                     <p>名称: {{ row.name }}</p>
                     <p>角色: {{ row.slug }}</p>
@@ -31,7 +31,7 @@
             <el-table-column
                     inline-template
                     label="角色"
-                    width="180">
+            >
                 <div>
                     <span style="margin-left: 10px">{{ row.slug }}</span>
                 </div>
@@ -40,7 +40,7 @@
             <el-table-column
                     inline-template
                     label="描述"
-                    width="180">
+            >
                 <div>
                     <el-icon name="information"></el-icon>
                     <span style="margin-left: 10px">{{ row.description }}</span>
@@ -50,7 +50,7 @@
             <el-table-column
                     inline-template
                     label="创建时间"
-                    width="180">
+            >
                 <div>
                     <el-icon name="time"></el-icon>
                     <span style="margin-left: 10px">{{ row.created_at }}</span>
@@ -60,7 +60,7 @@
             <el-table-column
                     inline-template
                     label="更新时间"
-                    width="180">
+            >
                 <div>
                     <el-icon name="time"></el-icon>
                     <span style="margin-left: 10px">{{ row.updated_at }}</span>

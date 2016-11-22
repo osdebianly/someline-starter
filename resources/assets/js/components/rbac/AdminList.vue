@@ -9,41 +9,27 @@
             <el-table-column
                     inline-template
                     label="ID"
-                    width="180">
+                    width="180"
+            >
                 <div>
                     <span style="margin-left: 10px">{{ row.id }}</span>
                 </div>
             </el-table-column>
             <el-table-column
                     inline-template
-                    label="角色名称"
-            >
-                <el-popover trigger="hover" placement="top">
-                    <p>名称: {{ row.name }}</p>
-                    <p>角色: {{ row.slug }}</p>
-                    <p>等级: {{ row.level }}</p>
-                    <div slot="reference">
-                        <el-tag>{{ row.name }}</el-tag>
-                    </div>
-                </el-popover>
-            </el-table-column>
-
-            <el-table-column
-                    inline-template
-                    label="角色"
+                    label="用户名"
             >
                 <div>
-                    <span style="margin-left: 10px">{{ row.slug }}</span>
+                    <span style="margin-left: 10px">{{ row.name }}</span>
                 </div>
             </el-table-column>
 
             <el-table-column
                     inline-template
-                    label="描述"
+                    label="邮箱"
             >
                 <div>
-                    <el-icon name="information"></el-icon>
-                    <span style="margin-left: 10px">{{ row.description }}</span>
+                    <span style="margin-left: 10px">{{ row.email }}</span>
                 </div>
             </el-table-column>
 
@@ -88,27 +74,38 @@
         </el-table>
 
         <el-dialog title="编辑菜单" v-model="dialogFormVisible">
+
             <el-form :model="form">
-                <el-form-item label="角色名称" :label-width="formLabelWidth">
+                <el-form-item label="用户名" :label-width="formLabelWidth">
                     <el-input v-model="form.name" auto-complete="off"></el-input>
                 </el-form-item>
-                <el-form-item label="角色" :label-width="formLabelWidth">
-                    <el-input v-model="form.slug" auto-complete="off"></el-input>
+                <el-form-item label="邮箱" :label-width="formLabelWidth">
+                    <el-input v-model="form.email" auto-complete="off"></el-input>
                 </el-form-item>
-                <el-form-item label="描述" :label-width="formLabelWidth">
-                    <el-input v-model="form.description" auto-complete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="等级" :label-width="formLabelWidth">
-                    <el-input v-model="form.level" auto-complete="off"></el-input>
+                <el-form-item label="密码" :label-width="formLabelWidth">
+                    <el-input v-model="form.password" auto-complete="off"></el-input>
                 </el-form-item>
 
             </el-form>
 
-            <el-checkbox-group v-model="permissionSelectd">
+            <div>
+                <el-tag type="primary">角色列表</el-tag>
+                <el-checkbox-group v-model="roleSelectd">
 
-                <el-checkbox v-for="permission in permissionData" :label="permission"></el-checkbox>
+                    <el-checkbox v-for="role in roleData" :label="role"></el-checkbox>
 
-            </el-checkbox-group>
+                </el-checkbox-group>
+            </div>
+            <br/>
+            <div>
+                <el-tag type="primary">权限列表</el-tag>
+                <el-checkbox-group v-model="permissionSelectd">
+
+                    <el-checkbox v-for="permission in permissionData" :label="permission"></el-checkbox>
+
+                </el-checkbox-group>
+            </div>
+
 
             <div slot="footer" class="dialog-footer">
                 <el-button @click.native="dialogFormVisible = false">取 消</el-button>
@@ -131,6 +128,8 @@
                 tableData: [],
                 permissionData: [],
                 permissionSelectd: [],
+                roleData: [],
+                roleSelectd: [],
 
                 dialogFormVisible: false,
                 form: {},
@@ -141,7 +140,11 @@
             handleEdit(index, row) {
                 //console.log(index, row);
                 this.form = row;
-                this.$http.get("/admin/roles/" + row.id + "/permissions")
+                this.$http.get("/admin/admins/" + row.id + "/roles")
+                        .then(function (response) {
+                            this.roleSelectd = response.data;
+                        });
+                this.$http.get("/admin/admins/" + row.id + "/permissions")
                         .then(function (response) {
                             this.permissionSelectd = response.data;
                         });
@@ -151,6 +154,7 @@
                 //console.log('add role');
                 this.form = {};
                 this.permissionSelectd = [];
+                this.roleSelectd = [];
                 this.dialogFormVisible = true;
 
             },
@@ -183,7 +187,8 @@
 
                 if (this.form.id) {
                     resource.update({id: this.form.id}, {
-                        roleData: this.form,
+                        adminData: this.form,
+                        roleData: this.roleSelectd,
                         permissionData: this.permissionSelectd
                     }).then(function (response) {
                         //console.log(response.data);
@@ -195,7 +200,8 @@
                     });
                 } else {
                     resource.save({}, {
-                        roleData: this.form,
+                        adminData: this.form,
+                        roleData: this.roleSelectd,
                         permissionData: this.permissionSelectd
                     }).then(function (response) {
                         //console.log(response.data);
@@ -218,12 +224,17 @@
         },
         mounted(){
             self = this;
-            resource = this.$resource('/admin/roles{/id}', {});
+            resource = this.$resource('/admin/admins{/id}', {});
             this.initData();
             this.$http.get("/admin/permissions/list")
                     .then(function (response) {
                         console.log('permission' + response.data);
                         this.permissionData = response.data;
+                    });
+            this.$http.get("/admin/roles/list")
+                    .then(function (response) {
+                        console.log('role' + response.data);
+                        this.roleData = response.data;
                     });
         }
     }

@@ -33,12 +33,14 @@ class Admin extends Authenticatable implements HasRoleAndPermissionContract
         'password', 'remember_token',
     ];
 
-    /**
-     * 用户角色
-     */
-    public function roles()
+    public function setPasswordAttribute($value)
     {
-        return $this->belongsToMany('Someline\Models\Foundation\Role');
+        if (starts_with($value, '$2') && strlen($value) > 40) {
+            $this->attributes['password'] = $value;
+        } else {
+            $this->attributes['password'] = bcrypt($value);
+        }
+
     }
 
 
