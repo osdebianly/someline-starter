@@ -1,5 +1,7 @@
 <template>
     <div>
+        <el-button icon="plus" type="success" class="pull-right" style="margin-right: 50px" @click="handleAdd">新增
+        </el-button>
         <el-table
                 :data="tableData"
                 border
@@ -96,6 +98,9 @@
                 <el-form-item label="描述" :label-width="formLabelWidth">
                     <el-input v-model="form.description" auto-complete="off"></el-input>
                 </el-form-item>
+                <el-form-item label="等级" :label-width="formLabelWidth">
+                    <el-input v-model="form.level" auto-complete="off"></el-input>
+                </el-form-item>
 
             </el-form>
             <div slot="footer" class="dialog-footer">
@@ -104,42 +109,98 @@
             </div>
         </el-dialog>
 
+
     </div>
 
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        tableData: [],
-        dialogFormVisible: false,
-        form: {},
-        formLabelWidth: '120px'
-      }
-    },
-    methods: {
-      handleEdit(index, row) {
-        console.log(index, row);
-        this.form = row ;
-        this.dialogFormVisible = true ;
-      },
-      handleDelete(index, row) {
-        console.log(index, row);
-      },
-      onSubmit(){
-            console.log('form'+this.form) ;
-      }
-    },
-    mounted(){
+    var resource = {};
+    var self = {};
 
-         this.$http.get('/admin/roles/all')
-                        .then(response => {
-                            this.tableData = response.data;
+    export default {
+        data() {
+            return {
+                tableData: [],
+                dialogFormVisible: false,
+                form: {},
+                formLabelWidth: '120px'
+            }
+        },
+        methods: {
+            handleEdit(index, row) {
+                //console.log(index, row);
+                this.form = row;
+                this.dialogFormVisible = true;
+            },
+            handleAdd() {
+                //console.log('add role');
+                this.form = {};
+                this.dialogFormVisible = true;
+
+            },
+            handleDelete(index, row) {
+                //console.log(index, row);
+
+                this.$confirm('此操作将永久删除' + row.name + ', 是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(function () {
+                    console.log('res' + resource);
+                    resource.delete({id: row.id}).then(function (response) {
+                        self.$message({
+                            type: 'success',
+                            message: '删除成功!'
                         });
+                        this.initData();
+                    });
 
+                }).catch(function () {
+                    self.$message({
+                        type: 'info',
+                        message: '已取消删除'
+                    });
+                });
+
+            },
+            onSubmit(){
+
+                if (this.form.id) {
+                    resource.update({id: this.form.id}, this.form).then(function (response) {
+                        //console.log(response.data);
+                        if (response.data.message) {
+                            self.$message(response.data.message);
+                            this.initData();
+                        }
+
+                    });
+                } else {
+                    resource.save({}, this.form).then(function (response) {
+                        //console.log(response.data);
+                        if (response.data.message) {
+                            self.$message(response.data.message);
+                            this.initData();
+                        }
+                    });
+                }
+            },
+            initData(){
+                this.dialogFormVisible = false;
+                this.form = {};
+                resource.get({id: "all"}).then(function (response) {
+                    //console.log(response.data);
+                    this.tableData = response.data;
+                });
+            }
+
+        },
+        mounted(){
+            self = this;
+            resource = this.$resource('/admin/roles{/id}', {});
+            this.initData();
+        }
     }
-  }
 
 
 </script>

@@ -35,7 +35,7 @@ if (!function_exists('auth_token')) {
      */
     function auth_token()
     {
-        return auth_user()->token() ;
+        return auth_user()->token();
     }
 
 }
@@ -49,11 +49,11 @@ if (!function_exists('auth_client_id')) {
      */
     function auth_client_id()
     {
-        $token = auth_token() ;
-        if(isset($token->client_id)){
-            return (int)$token->client_id ;
+        $token = auth_token();
+        if (isset($token->client_id)) {
+            return (int)$token->client_id;
         }
-        return 0 ;
+        return 0;
     }
 
 }
@@ -160,5 +160,13 @@ if (!function_exists('current_admin')) {
     function current_admin()
     {
         return auth('admin')->user();
+    }
+}
+
+if (!function_exists('response_message')) {
+
+    function response_message($message = "操作成功")
+    {
+        return ['status_code' => \Lukasoppermann\Httpstatus\Httpstatuscodes::HTTP_OK, 'message' => $message];
     }
 }

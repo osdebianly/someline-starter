@@ -42,8 +42,11 @@ export default{
 
             return (isMobile.matches);
         },
-        toString($value){
-            return $value.toString();
+        toString(value){
+            return value.toString();
+        },
+        wait(second = 2500){
+            var t = setTimeout(this.reloadPage, second);
         }
     }
 }

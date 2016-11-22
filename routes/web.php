@@ -73,6 +73,9 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function ($router) {
     Route::group(['prefix' => 'roles'], function ($router) {
         $router->get('', 'RoleController@index');
         $router->get('all', 'RoleController@all');
+        $router->post('', 'RoleController@store');
+        $router->put('{id}', 'RoleController@update');
+        $router->delete('{id}', 'RoleController@destroy');
 
     });
 

@@ -1,4 +1,3 @@
-
 window._ = require('lodash');
 window.moment = require('moment');
 
@@ -19,8 +18,10 @@ window.moment = require('moment');
  */
 
 window.Vue = require('vue');
-require('vue-resource');
+Vue.use(require('vue-resource'));
 require('vue-i18n');
+Vue.http.headers.common['X-CSRF-TOKEN'] = Laravel.csrfToken;
+Vue.http.headers.common['Accept-Language'] = Someline.locale;
 
 /**
  * We'll register a HTTP interceptor to attach the "CSRF" header to each of
@@ -28,14 +29,14 @@ require('vue-i18n');
  * included with Laravel will automatically verify the header's value.
  */
 
-// Vue.http.headers.common['Accept'] = 'application/x.someline.v1+json';
+Vue.http.headers.common['Accept'] = 'application/x.someline.v1+json';
 
-Vue.http.interceptors.push((request, next) => {
-    request.headers['X-CSRF-TOKEN'] = Laravel.csrfToken;
-    request.headers['Accept-Language'] = Someline.locale;
-
-    next();
-});
+// Vue.http.interceptors.push((request, next) => {
+//     request.headers['X-CSRF-TOKEN'] = Laravel.csrfToken;
+//     request.headers['Accept-Language'] = Someline.locale;
+//
+//     next();
+// });
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
