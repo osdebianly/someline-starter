@@ -3,16 +3,14 @@
         <el-button icon="plus" type="success" class="pull-right" style="margin-right: 50px" @click="handleAdd">新增
         </el-button>
         <el-table
+                v-loading.body="loading"
                 :data="tableData"
                 border
                 style="width: 100%">
             <el-table-column
-                    inline-template
                     label="ID"
+                    prop="id"
                     width="180">
-                <div>
-                    <span style="margin-left: 10px">{{ row.id }}</span>
-                </div>
             </el-table-column>
             <el-table-column
                     inline-template
@@ -27,30 +25,17 @@
                     </div>
                 </el-popover>
             </el-table-column>
-
             <el-table-column
-                    inline-template
-                    label="角色"
-            >
-                <div>
-                    <span style="margin-left: 10px">{{ row.slug }}</span>
-                </div>
+                    label="权限"
+                    prop="slug">
             </el-table-column>
-
             <el-table-column
-                    inline-template
                     label="描述"
-            >
-                <div>
-                    <el-icon name="information"></el-icon>
-                    <span style="margin-left: 10px">{{ row.description }}</span>
-                </div>
+                    prop="description">
             </el-table-column>
-
             <el-table-column
                     inline-template
-                    label="创建时间"
-            >
+                    label="创建时间">
                 <div>
                     <el-icon name="time"></el-icon>
                     <span style="margin-left: 10px">{{ row.created_at }}</span>
@@ -92,7 +77,7 @@
                 <el-form-item label="权限名称" :label-width="formLabelWidth">
                     <el-input v-model="form.name" auto-complete="off"></el-input>
                 </el-form-item>
-                <el-form-item label="角色" :label-width="formLabelWidth">
+                <el-form-item label="权限" :label-width="formLabelWidth">
                     <el-input v-model="form.slug" auto-complete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="描述" :label-width="formLabelWidth">
@@ -124,7 +109,8 @@
                 tableData: [],
                 dialogFormVisible: false,
                 form: {},
-                formLabelWidth: '120px'
+                formLabelWidth: '120px',
+                loading: true
             }
         },
         methods: {
@@ -191,6 +177,7 @@
                 resource.get({id: "all"}).then(function (response) {
                     //console.log(response.data);
                     this.tableData = response.data;
+                    this.loading = false;
                 });
             }
 

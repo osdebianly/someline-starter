@@ -3,16 +3,14 @@
         <el-button icon="plus" type="success" class="pull-right" style="margin-right: 50px" @click="handleAdd">新增
         </el-button>
         <el-table
+                v-loading.body="loading"
                 :data="tableData"
                 border
                 style="width: 100%">
             <el-table-column
-                    inline-template
                     label="ID"
-                    width="180">
-                <div>
-                    <span style="margin-left: 10px">{{ row.id }}</span>
-                </div>
+                    prop="id"
+                    width="100">
             </el-table-column>
             <el-table-column
                     inline-template
@@ -29,24 +27,15 @@
             </el-table-column>
 
             <el-table-column
-                    inline-template
                     label="角色"
-            >
-                <div>
-                    <span style="margin-left: 10px">{{ row.slug }}</span>
-                </div>
+                    prop="slug">
             </el-table-column>
 
             <el-table-column
-                    inline-template
                     label="描述"
+                    prop="description"
             >
-                <div>
-                    <el-icon name="information"></el-icon>
-                    <span style="margin-left: 10px">{{ row.description }}</span>
-                </div>
             </el-table-column>
-
             <el-table-column
                     inline-template
                     label="创建时间"
@@ -105,9 +94,7 @@
             </el-form>
 
             <el-checkbox-group v-model="permissionSelectd">
-
                 <el-checkbox v-for="permission in permissionData" :label="permission"></el-checkbox>
-
             </el-checkbox-group>
 
             <div slot="footer" class="dialog-footer">
@@ -131,10 +118,10 @@
                 tableData: [],
                 permissionData: [],
                 permissionSelectd: [],
-
                 dialogFormVisible: false,
                 form: {},
-                formLabelWidth: '120px'
+                formLabelWidth: '120px',
+                loading: true
             }
         },
         methods: {
@@ -212,6 +199,7 @@
                 resource.get({id: "all"}).then(function (response) {
                     //console.log(response.data);
                     this.tableData = response.data;
+                    this.loading = false;
                 });
             }
 

@@ -1,58 +1,56 @@
 <template>
     <div>
-        <el-button icon="plus" type="success" class="pull-right" style="margin-right: 50px" @click="handleAdd">新增
-        </el-button>
+        <el-row :gutter="20">
+            <el-col :span="4" :offset="8">
+                <div class="input-group">
+                    <input type="text" v-model="search" class="form-control input-sm bg-light no-border rounded padder"
+                           placeholder="Search ...">
+              <span class="input-group-btn">
+                <button type="submit" class="btn btn-sm bg-light rounded"><i class="fa fa-search"></i></button>
+              </span>
+                </div>
+            </el-col>
+            <el-col :span="3" :offset="9">
+                <el-button icon="plus" type="success" @click="handleAdd">新增</el-button>
+            </el-col>
+        </el-row>
+
+
         <el-table
+                v-loading.body="loading"
                 :data="tableData"
                 border
                 style="width: 100%">
             <el-table-column
-                    inline-template
                     label="ID"
-                    width="180"
-            >
-                <div>
-                    <span style="margin-left: 10px">{{ row.id }}</span>
-                </div>
+                    prop="id"
+                    width="100"
+                    sortable>
             </el-table-column>
             <el-table-column
-                    inline-template
                     label="用户名"
-            >
-                <div>
-                    <span style="margin-left: 10px">{{ row.name }}</span>
-                </div>
+                    prop="name">
             </el-table-column>
-
             <el-table-column
-                    inline-template
                     label="邮箱"
-            >
-                <div>
-                    <span style="margin-left: 10px">{{ row.email }}</span>
-                </div>
+                    prop="email">
             </el-table-column>
-
             <el-table-column
                     inline-template
-                    label="创建时间"
-            >
+                    label="创建时间">
                 <div>
                     <el-icon name="time"></el-icon>
                     <span style="margin-left: 10px">{{ row.created_at }}</span>
                 </div>
             </el-table-column>
-
             <el-table-column
                     inline-template
-                    label="更新时间"
-            >
+                    label="更新时间">
                 <div>
                     <el-icon name="time"></el-icon>
                     <span style="margin-left: 10px">{{ row.updated_at }}</span>
                 </div>
             </el-table-column>
-
             <el-table-column
                     :context="_self"
                     inline-template
@@ -91,21 +89,16 @@
             <div>
                 <el-tag type="primary">角色列表</el-tag>
                 <el-checkbox-group v-model="roleSelectd">
-
                     <el-checkbox v-for="role in roleData" :label="role"></el-checkbox>
-
                 </el-checkbox-group>
             </div>
             <br/>
             <div>
                 <el-tag type="primary">权限列表</el-tag>
                 <el-checkbox-group v-model="permissionSelectd">
-
                     <el-checkbox v-for="permission in permissionData" :label="permission"></el-checkbox>
-
                 </el-checkbox-group>
             </div>
-
 
             <div slot="footer" class="dialog-footer">
                 <el-button @click.native="dialogFormVisible = false">取 消</el-button>
@@ -121,6 +114,7 @@
 <script>
     var resource = {};
     var self = {};
+    var list = [];
 
     export default {
         data() {
@@ -130,10 +124,26 @@
                 permissionSelectd: [],
                 roleData: [],
                 roleSelectd: [],
-
                 dialogFormVisible: false,
                 form: {},
-                formLabelWidth: '120px'
+                formLabelWidth: '120px',
+                loading: true,
+                search: ''
+            }
+        },
+        watch: {
+            search: function (val, oldVal) {
+                console.log('new: %s, old: %s', val, oldVal);
+                var result = [];
+                list.forEach(function (row) {
+                    var name = row.name;
+                    var email = row.email;
+                    if (name.indexOf(val) != -1 || email.indexOf(val) != -1) {
+//                        console.log('find'+row) ;
+                        result.push(row);
+                    }
+                });
+                this.tableData = result;
             }
         },
         methods: {
@@ -218,6 +228,8 @@
                 resource.get({id: "all"}).then(function (response) {
                     //console.log(response.data);
                     this.tableData = response.data;
+                    list = response.data;
+                    this.loading = false;
                 });
             }
 
