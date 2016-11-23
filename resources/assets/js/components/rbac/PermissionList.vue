@@ -10,7 +10,8 @@
             <el-table-column
                     label="ID"
                     prop="id"
-                    width="180">
+                    width="180"
+                    sortable>
             </el-table-column>
             <el-table-column
                     inline-template
