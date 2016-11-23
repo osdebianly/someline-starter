@@ -100,6 +100,15 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function ($router) {
         $router->delete('{id}', 'AdminController@destroy');
 
     });
+    Route::group(['prefix' => 'menus'], function ($router) {
+        $router->get('', 'MenuController@index');
+        $router->get('all', 'MenuController@all');
+        $router->get('{id}/permission', 'MenuController@permission');
+        $router->post('', 'MenuController@store');
+        $router->put('{id}', 'MenuController@update');
+        $router->delete('{id}', 'MenuController@destroy');
+
+    });
 
 });
 

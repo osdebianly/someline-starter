@@ -57,6 +57,11 @@
                         <span>后台用户管理</span>
                     </a>
                 </li>
+                <li>
+                    <a href="{{ url('admin/menus') }}">
+                        <span>菜单管理</span>
+                    </a>
+                </li>
             </ul>
         </li>
         <li>
@@ -71,7 +76,7 @@
         <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
             <span>菜单</span>
         </li>
-        <menu-list></menu-list>
+        <my-menu-list></my-menu-list>
     </ul>
 </nav>
 <!-- nav -->
