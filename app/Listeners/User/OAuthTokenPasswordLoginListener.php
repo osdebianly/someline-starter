@@ -48,7 +48,7 @@ class OAuthTokenPasswordLoginListener
             "DATA" => [
                 "UserID" => (string)$userInfo['user_id'],
                 "UserStatus" => isset($userInfo['status']) ? (string)$userInfo['status'] : '0',
-                "SessionID" => $tokenInfo['access_token']
+                "SessionID" => $tokenInfo['session']
             ]
         ]);
         $data['serverid'] = isset($postInfo['server_id']) ? (int)$postInfo['server_id'] : 1;

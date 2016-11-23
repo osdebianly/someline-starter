@@ -161,6 +161,7 @@ class UsersController extends BaseController
          */
 
         if (isset($tokenInfo['access_token'])) {
+            $tokenInfo['session'] = md5($tokenInfo['access_token']);
             $eventInfo = [
                 'post_info' => $data,
                 'user_info' => $user->toArray(),
