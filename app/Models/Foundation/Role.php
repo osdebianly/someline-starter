@@ -2,10 +2,10 @@
 namespace Someline\Models\Foundation;
 
 use GeniusTS\Roles\Models\Role as Model;
-
+use GeniusTS\Roles\Traits\RoleHasRelations;
 class Role extends Model
 {
-
+    use RoleHasRelations;
     private $action = 'role';
 
     public function __construct(array $attributes = [])

@@ -23,35 +23,6 @@
         data(){
             return{
                 menus:[
-                    {
-                        "id":"1",
-                        "name":"菜单1",
-                        "url":"/admin",
-                        "children":[
-                            {
-                                "id":"2",
-                                "name":"1-1",
-                                "url":"/admin"
-                            },
-                            {
-                                "id":"3",
-                                "name":"1-2",
-                                "url":"/admin/2"
-                            }
-                        ]
-                    },
-                    {
-                        "id":"4",
-                        "name":"菜单2",
-                        "url":"/admin"
-
-                    },
-                     {
-                        "id":"5",
-                        "name":"菜单3",
-                        "url":"/admin"
-
-                    }
                 ]
             }
         },
@@ -89,6 +60,12 @@
         },
         mounted(){
             console.log('Component ready') ;
+
+            this.$http.get("admins/my-menus")
+                    .then(function (response) {
+                        console.log('my-menus' + response.data);
+                        this.menus = response.data;
+                    });
         }
 
     }

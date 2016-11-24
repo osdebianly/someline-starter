@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Someline\Http\Requests;
 use Someline\Http\Controllers\BaseController;
 use Someline\Models\Foundation\Admin;
+use Someline\Models\Foundation\Menu;
 use Someline\Models\Foundation\Permission;
 use Someline\Models\Foundation\Role;
 
@@ -56,6 +57,46 @@ class AdminController extends BaseController
         $admin = Admin::find($id);
         $permissions = $admin->getPermissions()->toArray();
         return array_column($permissions, 'name');
+    }
+
+    public function myMenus(Request $request)
+    {
+        $admin = current_admin();
+        if (is_null($admin)) {
+            return [];
+        }
+        $permissions = $admin->getPermissions()->toArray();
+        $menuList = array_column($permissions, 'slug');
+
+        $menus = Menu::all()->toArray();
+        $myMenus = [];
+        foreach ($menus as $menu) {
+            if (in_array($menu['slug'], $menuList)) {
+                $tmpMenu = [];
+                $tmpMenu['id'] = (string)$menu['id'];
+                $tmpMenu['name'] = (string)$menu['name'];
+                $tmpMenu['url'] = (string)$menu['url'];
+                if ($menu['pid'] == 0) {
+                    $tmpMenu['children'] = [];
+                    $myMenus[$menu['id']] = $tmpMenu;
+                } elseif ($menu['pid'] > 0) {
+                    if (!isset($myMenus[$menu['pid']])) {
+                        $myMenus[$menu['pid']] = array_first(array_filter(array_map(function ($item) use ($menu) {
+                            if ($item['id'] == $menu['pid']) {
+                                $tmpMenu['id'] = (string)$item['id'];
+                                $tmpMenu['name'] = (string)$item['name'];
+                                $tmpMenu['url'] = (string)$item['url'];
+                                $tmpMenu['children'] = [];
+                                return $tmpMenu;
+                            }
+                        }, $menus)));
+                    }
+                    $myMenus[$menu['pid']]['children'][] = $tmpMenu;
+                }
+            }
+
+        }
+        return array_values($myMenus);
     }
 
     /**

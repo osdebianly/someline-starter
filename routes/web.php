@@ -93,6 +93,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function ($router) {
     Route::group(['prefix' => 'admins'], function ($router) {
         $router->get('', 'AdminController@index');
         $router->get('all', 'AdminController@all');
+        $router->get('my-menus', 'AdminController@myMenus');
         $router->get('{id}/roles', 'AdminController@roles');
         $router->get('{id}/permissions', 'AdminController@permissions');
         $router->post('', 'AdminController@store');

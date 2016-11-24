@@ -97,7 +97,7 @@ class RoleController extends BaseController
         } catch (ModelNotFoundException $e) {
             return response_message('该配置无效');
         }
-
+        $role->detachAllPermissions();
         foreach ($permissions as $permissionName) {
             $permisstion = Permission::where('name', $permissionName)->first();
             $role->attachPermission($permisstion);
