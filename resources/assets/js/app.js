@@ -55,14 +55,16 @@ Vue.component(
 );
 
 Vue.component('example', require('./components/Example.vue'));
-Vue.component('sl-user-list', require('./components/user/UserList.vue'));
+Vue.component('user-list', require('./components/user/UserList.vue'));
 Vue.component('sl-oauth', require('./components/console/OAuth.vue'));
 
-Vue.component('my-menu-list', require('./components/menu/MenuList.vue'));
+Vue.component('my-menu-list', require('./components/menu/MyMenuList.vue'));
 Vue.component('role-list', require('./components/rbac/RoleList.vue'));
 Vue.component('permission-list', require('./components/rbac/PermissionList.vue'));
 Vue.component('admin-list', require('./components/rbac/AdminList.vue'));
 Vue.component('menu-list', require('./components/rbac/MenuList.vue'));
+Vue.component('publication-list', require('./components/publication/PublicationList.vue'));
+Vue.component('publication-add', require('./components/publication/PublicationAdd.vue'));
 
 
 

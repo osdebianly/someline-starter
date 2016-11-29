@@ -46,4 +46,9 @@ return [
 
     'maxUserNumber' => 30,
 
+    'uploads' => [
+        'storage' => 'local',
+        'webpath' => '/uploads',
+    ],
+
 ];

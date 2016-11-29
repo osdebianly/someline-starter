@@ -165,8 +165,47 @@ if (!function_exists('current_admin')) {
 
 if (!function_exists('response_message')) {
 
-    function response_message($message = "操作成功")
+    function response_message($message = "操作成功", $data = [])
     {
-        return ['status_code' => \Lukasoppermann\Httpstatus\Httpstatuscodes::HTTP_OK, 'message' => $message];
+        $statusCode = \Lukasoppermann\Httpstatus\Httpstatuscodes::HTTP_OK;
+
+        return \Response::make([
+            'message' => $message,
+            'status_code' => $statusCode,
+            'data' => $data
+        ], $statusCode);
     }
+}
+
+if (!function_exists('response_exection')) {
+
+    function response_exection($message = "操作异常", $data = [])
+    {
+        $statusCode = \Lukasoppermann\Httpstatus\Httpstatuscodes::HTTP_UNPROCESSABLE_ENTITY;
+
+        return \Response::make([
+            'message' => $message,
+            'status_code' => $statusCode,
+            'data' => $data
+        ], $statusCode);
+    }
+}
+
+/**
+ * 返回可读性更好的文件尺寸
+ */
+function human_filesize($bytes, $decimals = 2)
+{
+    $size = ['B', 'kB', 'MB', 'GB', 'TB', 'PB'];
+    $factor = floor((strlen($bytes) - 1) / 3);
+
+    return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . @$size[$factor];
+}
+
+/**
+ * 判断文件的MIME类型是否为图片
+ */
+function is_image($mimeType)
+{
+    return starts_with($mimeType, 'image/');
 }

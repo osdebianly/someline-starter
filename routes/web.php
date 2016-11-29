@@ -29,15 +29,26 @@ Route::get('/home', 'HomeController@index');
 // Image Routes
 Route::get('/image/{name}', 'ImageController@showOriginalImage');
 Route::post('/image', 'ImageController@postImage');
+Route::post('/upload/upgrade', 'UploadController@upgrade');
 
 // Protected Routes
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => 'auth:admin'], function () {
 
     Route::get('/', function () {
         return redirect('users');
     });
 
-    Route::get('users', 'UserController@getUserList');
+    Route::group(['prefix' => 'users'], function ($router) {
+        $router->get('', 'UserController@index');
+        $router->get('all', 'UserController@all');
+        $router->get('my-menus', 'UserController@myMenus');
+        $router->get('{id}/roles', 'UserController@roles');
+        $router->get('{id}/permissions', 'UserController@permissions');
+        $router->post('', 'UserController@store');
+        $router->put('{id}', 'UserController@update');
+        $router->delete('{id}', 'UserController@destroy');
+    });
+
 
 });
 
@@ -111,7 +122,34 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function ($router) {
 
     });
 
+    Route::group(['prefix' => 'publications'], function ($router) {
+        $router->get('', 'PublicationController@index');
+        $router->get('add', 'PublicationController@add');
+        $router->get('all', 'PublicationController@all');
+        $router->post('', 'PublicationController@store');
+        $router->put('{id}', 'PublicationController@update');
+        $router->delete('{id}', 'PublicationController@destroy');
+
+        $router->post('checkout', 'PublicationController@gitCheckOut');
+
+
+    });
+
 });
+
+/**
+ * Route::group(['prefix' => 'users'], function ($router) {
+ * $router->get('', 'UserController@index');
+ * $router->get('all', 'UserController@all');
+ * $router->get('my-menus', 'UserController@myMenus');
+ * $router->get('{id}/roles', 'UserController@roles');
+ * $router->get('{id}/permissions', 'UserController@permissions');
+ * $router->post('', 'UserController@store');
+ * $router->put('{id}', 'UserController@update');
+ * $router->delete('{id}', 'UserController@destroy');
+ *
+ * });
+ */
 
 Route::get('/test/hashids/{id}', function ($id) {
     return Hashids::encode($id);

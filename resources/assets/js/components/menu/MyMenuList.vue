@@ -61,7 +61,7 @@
         mounted(){
             console.log('Component ready') ;
 
-            this.$http.get("admins/my-menus")
+            this.$http.get("/admin/admins/my-menus")
                     .then(function (response) {
                         console.log('my-menus' + response.data);
                         this.menus = response.data;
