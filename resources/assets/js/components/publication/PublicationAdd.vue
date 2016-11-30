@@ -21,8 +21,8 @@
                         </div>
                         <div class="line line-dashed b-b line-lg pull-in"></div>
                         <el-form :model="publication" :rules="rules" ref="basic" :label-width="formLabelWidth">
-                            <el-form-item label="包名称" prop="package_name">
-                                <el-input v-model="publication.package_name"></el-input>
+                            <el-form-item label="客户端 ID" prop="client_id">
+                                <el-input v-model="publication.client_id"></el-input>
                             </el-form-item>
                             <el-form-item label="最小版本" prop="min_version">
                                 <el-input v-model="publication.min_version"></el-input>
@@ -41,7 +41,7 @@
                                                 style="width: 100%;"></el-date-picker>
 
                             </el-form-item>
-                            <el-form-item label="活动区域">
+                            <el-form-item label="系统" required>
 
                                 <el-select v-model="publication.os" placeholder="请选择系统类型">
                                     <el-option label="安卓" value="android"></el-option>
@@ -336,7 +336,8 @@
         data(){
             return {
                 publication: {
-                    package_name: 'com.xxxx',
+                    name: 'XX配置',
+                    client_id: '0',
                     min_version: '0.0.1',
                     max_version: '1.0.0',
                     min_time: '',
@@ -349,16 +350,18 @@
                     hot_upgrade: {
                         git_url: 'http://',
                         git_branch: 'master',
-                        package_name: '',
+                        client_id: '',
                         backup_donwload_url: ''
                     },
                     uuids: [{value: 'uuid'}]
 
                 },
                 rules: {
-                    package_name: [
-                        {required: true, message: '请输入包名称', trigger: 'blur'},
-                        {min: 3, max: 20, message: '长度在 3 到 20 个字符', trigger: 'blur'}
+                    name: [
+                        {required: true, message: '请输入配置方案名称', trigger: 'blur'}
+                    ],
+                    client_id: [
+                        {required: true, message: '请输入Client ID', trigger: 'blur'}
                     ],
                     min_version: [
                         {required: true, message: '请输入最小版本', trigger: 'change'}
@@ -405,7 +408,7 @@
             },
 
             handleCheckOut(){
-                this.publication.hot_upgrade.package_name = this.publication.package_name;
+                this.publication.hot_upgrade.client_id = this.publication.client_id;
                 this.$http.post('/admin/publications/checkout', this.publication.hot_upgrade).then(function (response) {
                     self.publication.hot_upgrade.backup_donwload_url = response.data.data.download_url;
                     self.$notify.success({

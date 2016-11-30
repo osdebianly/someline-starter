@@ -11,6 +11,7 @@ namespace Someline\Http\Controllers\Admin;
 
 use Dingo\Api\Exception\ResourceException;
 use GuzzleHttp\Exception\BadResponseException;
+use Someline\Models\Common\OauthClient;
 use Someline\Models\Foundation\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
@@ -47,6 +48,16 @@ class PublicationController extends BaseController
     {
         $publications = Publication::all();
         return $publications;
+    }
+
+    /**
+     * 返回 当前注册的 Password 客户端列表
+     * @return mixed
+     */
+    public function clients()
+    {
+        $clients = OauthClient::where(['password_client' => 1])->get(['id', 'name']);
+        return $clients;
     }
 
     public function store(Request $request)
@@ -130,5 +141,6 @@ class PublicationController extends BaseController
 
         return response_message('克隆成功', ['download_url' => $donwloadUrl]);
     }
+
 
 }

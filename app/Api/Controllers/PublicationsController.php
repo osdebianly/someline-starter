@@ -3,6 +3,7 @@
 namespace Someline\Api\Controllers;
 
 use Carbon\Carbon;
+use Dingo\Api\Exception\ResourceException;
 use Faker\Provider\Base;
 use Illuminate\Http\Request;
 
@@ -66,39 +67,52 @@ class PublicationsController extends BaseController
         $this->validator->with($data)->passesOrFail(ValidatorInterface::RULE_UPDATE);
         //todo 减少时间精确度,来利用缓存
         $where = [
-            'package_name' => $data['package_name'],
+            'client_id' => $data['client_id'],
+            'os' => $data['os'],
             ['min_time', '<', Carbon::now()],
             ['max_time', '>', Carbon::now()],
         ];
+        if (isset($data['source'])) {
+            $where['source'] = $data['source'];
+        }
 
         $publications = $this->repository->findWhere($where);
-
-        $publications = $publications['data'] ?: [];
+        if (empty($publications['data'])) {
+            throw new ResourceException('未找到符合条件的配置文件');
+        }
+        $publications = $publications['data'];
         $config = array_first($publications);
 
-
         foreach ($publications as $publication) {
-
-            //比对版本
+            /**
+             * 比对版本,优先匹配白名单
+             */
             if ($version < $publication['min_version'] || $version > $publication['max_version'])
                 continue;
             if (empty($publication['uuids'])) {
                 $config = $publication;
-            } elseif (in_array($uuid, $publication['uuids'])) {
+            } elseif (in_array($uuid, array_column($publication['uuids'], 'value'))) {
                 $config = $publication;
                 break;
             }
         }
 
-        $returnData = [
-            'publication_message' => isset($config['publication_message']) ? $config['publication_message'] : '',
-            'online_config' => isset($config['online_config']) ? $config['online_config'] : '',
-            'server_list' => isset($config['server_list']) ? $config['server_list'] : '',
-            'hot_upgrade' => isset($config['hot_upgrade']) ? $config['hot_upgrade'] : ''
-        ];
+        /**
+         * 转换数据(原数据结构方便 vue 解析)
+         */
+        $publication_message = $config['publication_message'];
+        $hot_upgrade = $config['hot_upgrade'];
 
-        return $returnData;
+        $online_config = [];
+        array_map(function ($config) use (&$online_config) {
+            $online_config[$config["key"]] = $config["value"];
+        }, $config['online_config']);
+        $server_list = [];
+        array_map(function ($config) use (&$server_list) {
+            $server_list[] = $config["value"];
+        }, $config['server_list']);
 
+        return compact('publication_message', 'server_list', 'online_config', 'hot_upgrade');
 
     }
 

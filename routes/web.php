@@ -29,7 +29,6 @@ Route::get('/home', 'HomeController@index');
 // Image Routes
 Route::get('/image/{name}', 'ImageController@showOriginalImage');
 Route::post('/image', 'ImageController@postImage');
-Route::post('/upload/upgrade', 'UploadController@upgrade');
 
 // Protected Routes
 Route::group(['middleware' => 'auth:admin'], function () {
@@ -62,15 +61,7 @@ Route::group(['prefix' => 'console'], function () {
     Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 
 });
-// 配置信息
-Route::group(['prefix' => 'config'], function () {
-    Route::get('/qiniu', function () {
-        $disk = \Storage::disk('qiniu');
-        $data['base_url'] = config('filesystems.disks.qiniu.domains.custom') ?: config('filesystems.disks.qiniu.domains.default');
-        $data['upload_token'] = $disk->uploadToken();
-        return $data;
-    });
-});
+
 
 /**
  * 管理员
@@ -126,6 +117,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function ($router) {
         $router->get('', 'PublicationController@index');
         $router->get('add', 'PublicationController@add');
         $router->get('all', 'PublicationController@all');
+        $router->get('clients', 'PublicationController@clients');
         $router->post('', 'PublicationController@store');
         $router->put('{id}', 'PublicationController@update');
         $router->delete('{id}', 'PublicationController@destroy');

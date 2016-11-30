@@ -43,8 +43,24 @@ $api->version('v1', [
 
         //登录注册合并
         $api->post('users/merge', 'UsersController@loginMerge');
-        //获取通知
+        //根据设备版本返回后台配置
         $api->get('publications', 'PublicationsController@index');
+
+        // 所有版本公共配置信息
+        $api->group(['prefix' => 'config'], function (Router $api) {
+            $api->get('/qiniu', function () {
+                $disk = \Storage::disk('qiniu');
+                $data['base_url'] = config('filesystems.disks.qiniu.domains.custom') ?: config('filesystems.disks.qiniu.domains.default');
+                $data['upload_token'] = $disk->uploadToken();
+                return $data;
+            });
+            $api->get('/geoip', function () {
+                $location = \GeoIP::getLocation(request('ip'));
+                return $location;
+            });
+
+
+        });
 
         
     }) ;

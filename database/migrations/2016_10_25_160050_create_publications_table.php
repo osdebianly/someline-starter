@@ -15,24 +15,25 @@ class CreatePublicationsTable extends Migration
     {
         Schema::create('publications', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('package_name')->comment('软件包名');
+            $table->integer('client_id')->comment('Oauth2 client_id');
+            $table->string('name')->nullable()->comment('配置方案名称');
+            $table->string('source')->nullable()->comment('渠道来源');
+            $table->string('os')->nullable()->comment('系统类型');
             $table->string('min_version')->nullable()->comment('最小版本号');
             $table->string('max_version')->nullable()->comment('最大版本号');
             $table->dateTime('min_time')->nullable()->comment('起始时间');
             $table->dateTime('max_time')->nullable()->comment('结束时间');
-            $table->text('uuids')->nullable()->comment('设备uuid列表,空则所有生效');
+            $table->string('note')->nullable()->comment('备注');
 
-            $table->text('publication_message')->nullable()->comment('公告消息');
-            $table->text('online_config')->nullable()->comment('在线配置');
-            $table->text('server_list')->nullable()->comment('服务器列表');
-            $table->text('hot_upgrade')->nullable()->comment('热更');
+            $table->string('publication_message')->nullable()->comment('公告消息');
+            $table->json('uuids')->nullable()->comment('设备uuid列表,空则所有生效');
+            $table->json('online_config')->nullable()->comment('在线配置');
+            $table->json('server_list')->nullable()->comment('服务器列表');
+            $table->json('hot_upgrade')->nullable()->comment('热更');
 
-            $table->unsignedInteger('created_by')->nullable();
-            $table->timestamp('created_at')->nullable();
-            $table->ipAddress('created_ip')->nullable();
+            $table->timestamps();
             $table->unsignedInteger('updated_by')->nullable();
-            $table->timestamp('updated_at')->nullable();
-            $table->ipAddress('updated_ip')->nullable();
+
         });
     }
 

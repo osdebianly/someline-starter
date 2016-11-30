@@ -10,7 +10,7 @@ class PublicationValidator extends LaravelValidator
 
     protected $rules = [
         ValidatorInterface::RULE_CREATE => [
-            'package_name' => 'required|unique:publications',
+            'client_id' => 'required|unique:publications',
             'min_version' => 'required|string|min:1|max:10',
             'max_version' => 'string|string|min:1|max:10',
             'min_time' => 'required|datetime',
@@ -19,9 +19,11 @@ class PublicationValidator extends LaravelValidator
 
         ],
         ValidatorInterface::RULE_UPDATE => [
-            'package_name' => 'required',
+            'client_id' => 'required',
             'version' => 'required|string',
-            'uuid' => 'required|string'
+            'uuid' => 'required|string',
+            'os' => 'required|in:android,ios',
+            'source' => 'string'
         ],
     ];
 }
