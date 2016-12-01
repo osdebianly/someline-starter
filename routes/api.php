@@ -123,7 +123,8 @@ $api->version('v1', [
         });
         //活动
         $api->group(['prefix' => 'activities'], function (Router $api) {
-            $api->post('good_reputation', 'ActivitiesController@good_reputation');
+            $api->post('good_reputation', 'ActivitiesController@goodReputation');
+            $api->get('good_reputation', 'ActivitiesController@getGoodReputation');
         });
 
     });

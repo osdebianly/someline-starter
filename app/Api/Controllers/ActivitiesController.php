@@ -5,6 +5,7 @@ namespace Someline\Api\Controllers;
 use Dingo\Api\Exception\DeleteResourceFailedException;
 use Dingo\Api\Exception\StoreResourceFailedException;
 use Dingo\Api\Exception\UpdateResourceFailedException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Prettus\Validator\Contracts\ValidatorInterface;
 use Someline\Http\Requests\ActivityCreateRequest;
 use Someline\Http\Requests\ActivityUpdateRequest;
@@ -42,6 +43,19 @@ class ActivitiesController extends BaseController
         return $this->repository->all();
     }
 
+    public function getGoodReputation()
+    {
+        $userId = current_auth_user()->getAuthUserId();
+        try {
+            $activity = $this->repository->where(['user_id' => $userId])->firstOrFail();
+        } catch (ModelNotFoundException $e) {
+            return [];
+        }
+
+        return array_get($activity, 'data.good_reputation');
+
+    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -50,7 +64,7 @@ class ActivitiesController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function good_reputation(Request $request)
+    public function goodReputation(Request $request)
     {
 
         $data = $request->only('pic_url', 'message');
@@ -75,6 +89,7 @@ class ActivitiesController extends BaseController
         return $activity;
 
     }
+
 
     /**
      * Store a newly created resource in storage.
