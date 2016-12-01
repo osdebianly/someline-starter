@@ -121,7 +121,10 @@ $api->version('v1', [
             $api->post('bind', 'SMSController@bind');
             $api->post('unbind', 'SMSController@unbind');
         });
-
+        //活动
+        $api->group(['prefix' => 'activities'], function (Router $api) {
+            $api->post('good_reputation', 'ActivitiesController@good_reputation');
+        });
 
     });
 

@@ -65,6 +65,7 @@ Vue.component('admin-list', require('./components/rbac/AdminList.vue'));
 Vue.component('menu-list', require('./components/rbac/MenuList.vue'));
 Vue.component('publication-list', require('./components/publication/PublicationList.vue'));
 Vue.component('publication-add', require('./components/publication/PublicationAdd.vue'));
+Vue.component('good-reputation-list', require('./components/activity/GoodReputationList.vue'));
 
 
 

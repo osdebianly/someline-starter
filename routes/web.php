@@ -126,6 +126,18 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function ($router) {
 
 
     });
+    /**
+     * 活动管理
+     */
+    Route::group(['prefix' => 'activities'], function ($router) {
+        $router->get('good_reputation', 'ActivitiesController@goodReputation');
+        $router->get('good_reputation/wait', 'ActivitiesController@goodReputationWait');
+        $router->get('good_reputation/success', 'ActivitiesController@goodReputationSuccess');
+        $router->get('good_reputation/fail', 'ActivitiesController@goodReputationFail');
+        $router->get('good_reputation/all', 'ActivitiesController@goodReputationAll');
+        $router->put('good_reputation/{id}', 'ActivitiesController@updateGoodReputation');
+
+    });
 
 });
 

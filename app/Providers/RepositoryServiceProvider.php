@@ -36,6 +36,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(PayRepository::class, PayRepositoryEloquent::class);
         $this->app->bind(PublicationRepository::class, PublicationRepositoryEloquent::class);
 
+        $this->app->bind(\Someline\Repositories\Interfaces\ActivityRepository::class, \Someline\Repositories\Eloquent\ActivityRepositoryEloquent::class);
         //:end-bindings:
     }
 }

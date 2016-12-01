@@ -86,7 +86,7 @@
 
             <el-form :model="form">
                 <el-form-item label="父ID" :label-width="formLabelWidth">
-                    <el-input v-model="form.fid" auto-complete="off"></el-input>
+                    <el-input v-model="form.pid" auto-complete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="菜单名" :label-width="formLabelWidth">
                     <el-input v-model="form.name" auto-complete="off"></el-input>
