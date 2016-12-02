@@ -56,6 +56,7 @@ class Publication extends Model
 
     public function setHotUpgradeAttribute($value)
     {
+        $value['checked_at'] = (string)Carbon::parse($value['checked_at']);
         $this->attributes['hot_upgrade'] = json_encode($value);
     }
 

@@ -253,6 +253,9 @@
                                                 </el-col>
                                             </el-row>
                                         </el-form-item>
+                                        <el-form-item label="上次检出时间">
+                                            {{ publication.hot_upgrade.checked_at }}
+                                        </el-form-item>
                                         <div class="line line-dashed b-b line-lg pull-in"></div>
                                         <el-form-item>
                                             <el-row>
@@ -388,7 +391,8 @@
                         git_url: 'http://',
                         git_branch: 'master',
                         client_id: '',
-                        backup_donwload_url: ''
+                        backup_donwload_url: '',
+                        checked_at: ''
                     },
                     uuids: [{value: 'uuid'}]
 
@@ -441,6 +445,7 @@
                 this.publication.hot_upgrade.client_id = this.publication.client_id;
                 this.$http.post('/admin/publications/checkout', this.publication.hot_upgrade).then(function (response) {
                     self.publication.hot_upgrade.backup_donwload_url = response.data.data.download_url;
+                    self.publication.hot_upgrade.checked_at = new Date();
                     self.$notify.success({
                         title: '成功',
                         message: response.data.message
