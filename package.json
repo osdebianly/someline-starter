@@ -6,7 +6,6 @@
     "dev": "gulp watch",
     "theme": "gulp --gulpfile gulpfile_theme.js"
   },
-
   "devDependencies": {
     "babel-core": "^6.17.0",
     "babel-loader": "^6.2.5",
@@ -18,7 +17,7 @@
     "jquery": "^3.1.0",
     "laravel-elixir": "^6.0.0-9",
     "laravel-elixir-vue-2": "^0.2.0",
-    "laravel-elixir-webpack-official": "^1.0.8",
+    "laravel-elixir-webpack-official": "^1.0.10",
     "lodash": "^4.14.0",
     "moment": "^2.13.0",
     "vue": "^2.0.1",

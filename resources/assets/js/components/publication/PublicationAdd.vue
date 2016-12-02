@@ -462,15 +462,14 @@
             },
             //todo 提交数据
             onSubmit(){
-
                 console.log(JSON.stringify(this.publication));
 
                 resource.save({}, this.publication).then(function (response) {
                     console.log(response.data);
                     self.$notify.info({title: '成功', message: response.data.message});
+                    self.redirectToUrlFromBaseUrl('admin/publications');
                 }).catch(function (response) {
-                    self.$notify.error({title: '错误', message: response.data.message});
-
+                    self.$notify.error({title: '发生了错误,请联系管理员', message: response.data.message});
                 });
 
 
