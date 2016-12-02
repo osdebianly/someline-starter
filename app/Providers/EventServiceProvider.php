@@ -29,6 +29,12 @@ class EventServiceProvider extends ServiceProvider
         'Someline\Events\OrderPaid' => [
             'Someline\Listeners\OrderPaidListener'
         ],
+        /**
+         * 活动领取奖励
+         */
+        'Someline\Events\ActivityAward' => [
+            'Someline\Listeners\ActivityAwardListener'
+        ],
     ];
 
     protected $subscribe = [

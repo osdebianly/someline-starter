@@ -50,5 +50,8 @@ return [
         'storage' => 'local',
         'webpath' => '/uploads',
     ],
+    'activity' => [
+        'good_reputation' => 500000,  //好评送50万游戏币
+    ]
 
 ];

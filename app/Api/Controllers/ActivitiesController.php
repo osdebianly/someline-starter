@@ -2,11 +2,15 @@
 
 namespace Someline\Api\Controllers;
 
+use Carbon\Carbon;
 use Dingo\Api\Exception\DeleteResourceFailedException;
+use Dingo\Api\Exception\ResourceException;
 use Dingo\Api\Exception\StoreResourceFailedException;
 use Dingo\Api\Exception\UpdateResourceFailedException;
+use GuzzleHttp\Exception\BadResponseException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Prettus\Validator\Contracts\ValidatorInterface;
+use Someline\Events\ActivityAward;
 use Someline\Http\Requests\ActivityCreateRequest;
 use Someline\Http\Requests\ActivityUpdateRequest;
 use Someline\Repositories\Interfaces\ActivityRepository;
@@ -51,8 +55,37 @@ class ActivitiesController extends BaseController
         } catch (ModelNotFoundException $e) {
             return [];
         }
-
         return array_get($activity, 'data.good_reputation');
+
+    }
+
+    /**
+     * 领取好评奖励
+     * @return array|mixed
+     */
+    public function getGoodReputationAward()
+    {
+        $userId = current_auth_user()->getAuthUserId();
+        try {
+            $activity = $this->repository->where(['user_id' => $userId])->firstOrFail();
+        } catch (ModelNotFoundException $e) {
+            return [];
+        }
+
+        $goodReputation = array_get($activity, 'data.good_reputation');
+
+        if ($goodReputation['state'] != 'success' || isset($goodReputation['got_at']) && $goodReputation['got_at']) {
+            throw new ResourceException('审核未通过或已领取过');
+        }
+
+        $goodReputation['got_at'] = (string)Carbon::now();
+
+        $this->repository->updateOrCreate(['id' => $activity['data']['id']], ['good_reputation' => json_encode($goodReputation)]);
+        //todo 触发加钱事件, 带上原因说明 ,通知服务端加钱
+        event(new ActivityAward(['user_id' => $userId, 'note' => '好评送礼']));
+
+        return response_message("领取成功,稍后打到您的账户");
+
 
     }
 
@@ -77,14 +110,6 @@ class ActivitiesController extends BaseController
         $data['note'] = '';
 
         $activity = $this->repository->updateOrCreate(['user_id' => $userId], ['good_reputation' => json_encode($data)]);
-
-        // throw exception if store failed
-//        throw new StoreResourceFailedException('Failed to store.');
-
-        // A. return 201 created
-//        return $this->response->created(null);
-
-        // B. return data
 
         return $activity;
 

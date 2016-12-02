@@ -125,6 +125,7 @@ $api->version('v1', [
         $api->group(['prefix' => 'activities'], function (Router $api) {
             $api->post('good_reputation', 'ActivitiesController@goodReputation');
             $api->get('good_reputation', 'ActivitiesController@getGoodReputation');
+            $api->get('good_reputation_award', 'ActivitiesController@getGoodReputationAward');
         });
 
     });
