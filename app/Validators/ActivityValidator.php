@@ -15,7 +15,8 @@ class ActivityValidator extends LaravelValidator
          * 好评过滤
          */
         'good_reputation' => [
-
+            'message' => 'string',
+            'pic_url' => 'required|url'
         ],
     ];
 }
